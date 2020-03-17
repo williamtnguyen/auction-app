@@ -3,7 +3,7 @@ const Validator = require('validator'),
 
         
 /**
- * Takes in register input from client-side and checks validity
+ * Takes in registration form input from client-side and checks validity
  */
 function validateRegisterInput(data) {
   let errors = {}; 
@@ -24,9 +24,8 @@ function validateRegisterInput(data) {
     errors.email = 'Email field is required';
   } else if(!Validator.isEmail(data.email)) {
     errors.email = 'Email is invalid';
-    if(data.email.indexOf('@sjsu.edu') == -1) {
-      errors.email.concat(': must be SJSU email');
-    }
+  } else if(data.email.indexOf('@sjsu.edu') === -1) {
+    errors.email = ('Email must be valid SJSU email');
   }
 
   // Password validation

@@ -11,19 +11,22 @@ const validateLoginInput = require('../../validation/login');
 // Load User model
 const User = require('../../models/User');
 
+
 /**
+ * REGISTER ENDPOINT
  * @route POST api/users/register
- * @desc Register user
+ * @desc Register a user
  * @access Public 
  */
 router.post('/register', (req, res) => {
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
-  // Check validation
+  // Check input validation
   if(!isValid) {
     return res.status(400).json(errors);
   }
-  // Otherwise, valid credentials. Check if user already exists in DB
+
+  // Otherwise, valid inputs. Check if user already exists in DB
   User.findOne({ email: req.body.email })
     .then(user => {
       if(user) {
@@ -35,6 +38,7 @@ router.post('/register', (req, res) => {
           email: req.body.email,
           password: req.body.password
         });
+
         // Hash password before saving in DB
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -44,10 +48,74 @@ router.post('/register', (req, res) => {
             newUser.password = hash;
             newUser
               .save()
-              .then(user => res.json(user))
+              .then(user => res.json(user)) // returns user as JSON
               .catch(err => console.log(err));
           });
         });
       }
     });
 });
+
+
+/**
+ * LOGIN ENDPOINT
+ * @route POST api/users/login
+ * @desc Login a user and return JWT 
+ * @access Public 
+ */
+router.post('/login', (req, res) => {
+  // Form validation
+  const { errors, isValid } = validateLoginInput(req.body);
+  // Check input validation
+  if(!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  // Otherwise, valid inputs. Check if user already exists in DB
+  const email     = req.body.email,
+        password  = req.body.password;
+
+  // Check is user exists in DB via email
+  User.findOne({ email: email })
+    .then(user => {
+      if(!user) {
+        return res.status(404).json({ emailnotfound: 'Email not found'});
+      }
+
+      // Check if password submitted by client matches hashed password in DB
+      bcrypt.compare(password, user.password)
+        .then(isMatch => {
+          if(isMatch) {
+            // User successfully logs in, create JWT Payload
+            const payload = {
+              id: user.id,
+              name: user.name
+            };
+            // Sign the token
+            jwt.sign(
+              payload, 
+              keys.secretOrKey, 
+              {
+                expiresIn: 31556926 // 1 year in seconds
+              }, 
+              (err, token) => {
+                if(err) {
+                  return console.log(err);
+                }
+                // Return JWT
+                res.json({
+                  success: true,
+                  token: 'Bearer ' + token
+                });
+              }
+            );
+          } 
+          else {
+            return res.status(400).json({ passwordincorrect: 'Password incorrect' });
+          }
+        });
+    });
+});
+
+// Modularity of REST endpoints
+module.exports = router;
