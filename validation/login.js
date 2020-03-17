@@ -24,6 +24,7 @@ function validateLoginInput(data) {
     errors.password = 'Password field is required';
   }
 
+  // Return errors object as well as a boolean indicating if the client-side input is valid
   return {
     errors,
     isValid: isEmpty(errors)
