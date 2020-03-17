@@ -23,7 +23,7 @@ router.post('/register', (req, res) => {
   if(!isValid) {
     return res.status(400).json(errors);
   }
-  // Otherwise, valid credentials
+  // Otherwise, valid credentials. Check if user already exists in DB
   User.findOne({ email: req.body.email })
     .then(user => {
       if(user) {
