@@ -12,14 +12,17 @@ class Register extends Component {
       confirmPassword: '',
       errors: {}
     };
+    // binding 'this' context for event handlers
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   /* ~~~~ EVENT HANDLERS ~~~~ */
-  handleChange = (event) => {
+  handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
   }; 
 
-  handleSubmit = (event) => {
+  handleSubmit(event) {
     // preventDefault stops the page from reloading when submit button is clicked
     event.preventDefault();
     // Create new user from user input (will be sent to backend via Redux)
