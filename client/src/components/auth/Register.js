@@ -21,19 +21,20 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  
+  componentDidMount() {
+    // If user is already logged in and tries to access this route, should redirect to home
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/home');
+    }
+  }
+
   // Called when component may receive new properties
   componentWillReceiveProps(nextProps) {
     if(nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       });
-    }
-  }
-
-  componentDidMount() {
-    // If user is already logged in and tries to access this route, should redirect to home
-    if(this.props.auth.isAuthenticated) {
-      this.props.history.push('/home');
     }
   }
 
@@ -166,7 +167,7 @@ Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
-}
+};
 
 // Getting state from redux and mapping it to props to use in components
 const mapStateToProps = (state) => ({

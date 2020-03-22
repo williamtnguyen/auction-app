@@ -34,7 +34,7 @@ if(localStorage.jwtToken) {
   if(decoded.exp < currentTime) {
     store.dispatch(logoutUser());
     // Redirect to login 
-    window.location.href = './';
+    window.location.href = './login';
   }
 }
 

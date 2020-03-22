@@ -19,6 +19,14 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+  componentDidMount() {
+    // If user is already logged in and tries to access this route, should redirect to home
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/home');
+    }
+  }
+
   // Called when component may receive new properties
   componentWillReceiveProps(nextProps) {
     if(nextProps.auth.isAuthenticated) {
@@ -29,13 +37,6 @@ class Login extends Component {
       this.setState({
         errors: nextProps.errors
       });
-    }
-  }
-
-  componentDidMount() {
-    // If user is already logged in and tries to access this route, should redirect to home
-    if(this.props.auth.isAuthenticated) {
-      this.props.history.push('/home');
     }
   }
 
@@ -144,7 +145,7 @@ Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = (state) => ({
   auth: state.auth,

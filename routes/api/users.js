@@ -72,14 +72,14 @@ router.post('/login', (req, res) => {
   }
 
   // Otherwise, valid inputs. Check if user already exists in DB
-  const email     = req.body.email;
-  const password  = req.body.password;
+  const email     = req.body.email,
+        password  = req.body.password;
 
   // Check is user exists in DB via email
   User.findOne({ email })
     .then(user => {
       if(!user) {
-        return res.status(404).json({ emailnotfound: 'Email not found'});
+        return res.status(404).json({ emailnotfound: 'Email not found' });
       }
 
       // Check if password submitted by client matches hashed password in DB
@@ -91,6 +91,7 @@ router.post('/login', (req, res) => {
               id: user.id,
               name: user.name
             };
+            
             // Sign the token
             jwt.sign(
               payload, 
