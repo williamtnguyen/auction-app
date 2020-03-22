@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
+import classnames from 'classnames';
 
 // Component for Register form
 class Register extends Component {
@@ -17,6 +21,23 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // Called when component may receive new properties
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
+  componentDidMount() {
+    // If user is already logged in and tries to access this route, should redirect to home
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/home');
+    }
+  }
+
+
   /* ~~~~ EVENT HANDLERS ~~~~ */
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
@@ -32,6 +53,7 @@ class Register extends Component {
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
     };
+    this.props.registerUser(newUser, this.props.history);
     console.log(newUser);
   };
 
@@ -63,8 +85,12 @@ class Register extends Component {
                   error={errors.name}
                   id='name'
                   type='text'
+                  className={classnames('', {
+                    invalid: errors.name,
+                  })}
                 />
                 <label htmlFor='name'>Name</label>
+                <span className='red-text'>{errors.name}</span>
               </div>
               {/* Email input field */}
               <div className='input-field col s12'>
@@ -74,8 +100,12 @@ class Register extends Component {
                   error={errors.email}
                   id='email'
                   type='email'
+                  className={classnames('', {
+                    invalid: errors.email,
+                  })}
                 />
                 <label htmlFor='email'>Email</label>
+                <span className='red-text'>{errors.email}</span>
               </div>
               {/* Password input field */}  
               <div className='input-field col s12'>
@@ -85,8 +115,12 @@ class Register extends Component {
                   error={errors.password}
                   id='password'
                   type='password'
+                  className={classnames('', {
+                    invalid: errors.password,
+                  })}
                 />
                 <label htmlFor='password'>Password</label>
+                <span className='red-text'>{errors.password}</span>
               </div>
               {/* Password-Confirmation input field */}
               <div className='input-field col s12'>
@@ -96,8 +130,12 @@ class Register extends Component {
                   error={errors.confirmPassword}
                   id='confirmPassword'
                   type='password'
+                  className={classnames('', {
+                    invalid: errors.confirmPassword,
+                  })}
                 />
                 <label htmlFor='confirmPassword'>Confirm Password</label>
+                <span className='red-text'>{errors.confirmPassword}</span>
               </div>
 
               {/* Submit Button */}
@@ -124,4 +162,20 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+// Getting state from redux and mapping it to props to use in components
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+// export default Register;
+export default connect(
+  mapStateToProps, 
+  { registerUser }
+) (withRouter(Register));

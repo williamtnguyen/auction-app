@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions';
+import classnames from 'classnames';
 
 // Component for Register form
 class Login extends Component {
@@ -15,6 +19,27 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // Called when component may receive new properties
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.auth.isAuthenticated) {
+      // redirect user to home-feed when logged-in
+      this.props.history.push('/home');
+    }
+    if(nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
+  componentDidMount() {
+    // If user is already logged in and tries to access this route, should redirect to home
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/home');
+    }
+  }
+
+
   /* ~~~~ EVENT HANDLERS ~~~~ */
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
@@ -28,6 +53,8 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password,
     };
+    // redirect is done within component, so no history param is passed
+    this.props.loginUser(userData);
     console.log(userData);
   }
 
@@ -50,7 +77,7 @@ class Login extends Component {
               </p>
             </div>
             
-            {/*  REGISTER FORM */}
+            {/*  LOGIN FORM */}
             <form noValidate onSubmit={this.handleSubmit}>
               {/* Email input field */}
               <div className='input-field col s12'>
@@ -60,8 +87,15 @@ class Login extends Component {
                   error={errors.email}
                   id='email'
                   type='email'
+                  className={classnames('', {
+                    invalid: errors.email || errors.emailnotfound
+                  })}
                 />
                 <label htmlFor='email'>Email</label>
+                <span className='red-text'>
+                  {errors.email}
+                  {errors.emailnotfound}
+                </span>
               </div>
               {/* Password input field */}  
               <div className='input-field col s12'>
@@ -71,8 +105,15 @@ class Login extends Component {
                   error={errors.password}
                   id='password'
                   type='password'
+                  className={classnames('', {
+                    invalid: errors.password || errors.passwordincorrect
+                  })}
                 />
                 <label htmlFor='password'>Password</label>
+                <span className='red-text'>
+                  {errors.password}
+                  {errors.passwordincorrect}
+                </span>
               </div>
             
               {/* Submit Button */}
@@ -99,4 +140,19 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+// export default Login;
+export default connect(
+  mapStateToProps, 
+  { loginUser }
+) (Login);
