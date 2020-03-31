@@ -42,12 +42,12 @@ class Register extends Component {
   /* ~~~~ EVENT HANDLERS ~~~~ */
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
-  }; 
+  } 
 
   handleSubmit(event) {
     // preventDefault stops the page from reloading when submit button is clicked
     event.preventDefault();
-    // Create new user from user input (will be sent to backend via Redux)
+    // Create object from user input (will be sent to backend via Redux)
     const newUser = {
       name: this.state.name,
       email: this.state.email,
@@ -56,7 +56,7 @@ class Register extends Component {
     };
     this.props.registerUser(newUser, this.props.history);
     console.log(newUser);
-  };
+  }
 
 
   render() {
@@ -149,7 +149,7 @@ class Register extends Component {
                     marginTop: '1rem'
                   }}
                   type='submit'
-                  className='btn btn-large waves-effect waves-light hoverable blue accent-3'
+                  className='btn btn-large waves-effect waves-light hoverable teal lighten-1'
                 >
                   Sign Up
                 </button>

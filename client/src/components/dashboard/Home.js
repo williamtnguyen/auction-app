@@ -19,8 +19,8 @@ class Home extends Component {
             <h4>
               <b>Welcome back,</b> {user.name.split(" ")[0]}
               <p className='flow-text grey-text text-darken-1'>
-                You are logged into a full-stack{' '}
-                <span style={{ fontFamily: 'monospace' }}>MERN</span> app 😳🔥
+                here's a feed of currently{' '}
+                <span style={{ fontFamily: 'monospace' }}>auctioning</span> items 😳🔥
               </p>
             </h4>
             {/* Logout button */}
@@ -32,7 +32,7 @@ class Home extends Component {
                 marginTop: '1rem'
               }}
               onClick={this.onLogoutClick}
-              className='btn btn-large waves-effect waves-light hoverable blue accent-3'
+              className='btn btn-large waves-effect waves-light hoverable teal lighten-1'
             >
               Logout
             </button>

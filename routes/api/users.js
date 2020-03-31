@@ -92,7 +92,7 @@ router.post('/login', (req, res) => {
               name: user.name
             };
             
-            // Sign the token
+            // Signing the JWT
             jwt.sign(
               payload, 
               keys.secretOrKey, 
@@ -118,5 +118,5 @@ router.post('/login', (req, res) => {
     });
 });
 
-// Modularity of REST endpoints
+// Modularity of API endpoints
 module.exports = router;

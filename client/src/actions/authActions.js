@@ -11,6 +11,7 @@ import {
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
+    // Make a post-request to api which will put instance in DB, then re-direct
     .post('/api/users/register', userData)
     // re-direct to login on successful register
     .then(res => history.push('/login'))
@@ -26,10 +27,10 @@ export const registerUser = (userData, history) => dispatch => {
 // Login: get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post('/api/user/login', userData)
+    .post('/api/users/login', userData)
     .then(res => {
       const token = res.data.token;
-      // save to localStorage to persist user logins
+      // save to localStorage to persist user logins with JWT in the future
       localStorage.setItem('jwtToken', token); 
       // set token to auth header
       setAuthToken(token);
@@ -46,7 +47,7 @@ export const loginUser = userData => dispatch => {
     );
 };
 
-// Setting current user action 
+// Setting a logged in user: authenticated if a token was sent back and identified by decoded token
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,

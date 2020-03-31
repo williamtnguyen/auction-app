@@ -4,7 +4,9 @@ const JwtStrategy   = require('passport-jwt').Strategy,
       User          = mongoose.model('users');
       keys          = require('./keys');
 
-const opts = {};
+// object literal containing options to control how the token is extracted from the request or verified
+const opts = {}; 
+// Creates a new extractor that looks for the JWT in the authorization header with the scheme 'bearer'
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = keys.secretOrKey;
 

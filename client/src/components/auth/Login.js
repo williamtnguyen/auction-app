@@ -74,7 +74,7 @@ class Login extends Component {
                 <b>Login</b> below
               </h4>
               <p className='grey-text text-darken-1'>
-                Don't have an account? <Link to='/login'>Register</Link>
+                Don't have an account? <Link to='/register'>Register</Link>
               </p>
             </div>
             
@@ -127,7 +127,7 @@ class Login extends Component {
                     marginTop: '1rem'
                   }}
                   type='submit'
-                  className='btn btn-large waves-effect waves-light hoverable blue accent-3'
+                  className='btn btn-large waves-effect waves-light hoverable teal lighten-1'
                 >
                   Login
                 </button>
