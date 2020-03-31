@@ -21,9 +21,8 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  
+  // If user is already logged in and tries to access this register route, should redirect to home
   componentDidMount() {
-    // If user is already logged in and tries to access this route, should redirect to home
     if(this.props.auth.isAuthenticated) {
       this.props.history.push('/home');
     }
@@ -54,8 +53,9 @@ class Register extends Component {
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
     };
+    // console.log(newUser);
+    // On submission of form, dispatch the registerUser action to Redux store
     this.props.registerUser(newUser, this.props.history);
-    console.log(newUser);
   }
 
 
@@ -179,4 +179,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps, 
   { registerUser }
-) (withRouter(Register));
+) (withRouter(Register)); // withRouter allows redirect within an action

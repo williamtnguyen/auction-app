@@ -19,9 +19,8 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
+  // If user is already logged in and tries to access this route, should redirect to home
   componentDidMount() {
-    // If user is already logged in and tries to access this route, should redirect to home
     if(this.props.auth.isAuthenticated) {
       this.props.history.push('/home');
     }
@@ -29,8 +28,8 @@ class Login extends Component {
 
   // Called when component may receive new properties
   componentWillReceiveProps(nextProps) {
+    // redirect user to home-feed when logged-in
     if(nextProps.auth.isAuthenticated) {
-      // redirect user to home-feed when logged-in
       this.props.history.push('/home');
     }
     if(nextProps.errors) {
@@ -54,9 +53,10 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password,
     };
-    // redirect is done within component, so no history param is passed
+
+    // console.log(userData);
+    // redirect is done within component, so this.props.history param is !passed
     this.props.loginUser(userData);
-    console.log(userData);
   }
 
   

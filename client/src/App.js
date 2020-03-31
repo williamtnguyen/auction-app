@@ -24,7 +24,7 @@ if(localStorage.jwtToken) {
   // set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
-  // Decode token and get user info and exp
+  // Decode token and get user info and expiration date
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
@@ -45,14 +45,14 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            {/* This Component is static and are on the page inevitably */}
+            {/* This Component is on the page inevitably */}
             <Navbar />
-            {/* These Components are dynamic, react-router-dom is used to make the components appear without reloading page */}
+            {/* These Components rendered on these paths, react-router-dom is used to make the components appear without reloading page */}
             <Route exact path='/' component={Landing} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             {/* Private Route: home page */}
-            <Switch>
+            <Switch> 
               <PrivateRoute exact path='/home' component={Home} />
             </Switch>
           </div>

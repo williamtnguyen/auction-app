@@ -23,7 +23,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 
-// ~~~~ ROUTES ~~~~ //
+// ~~~~ API endpoints for auth ~~~~ //
 app.use('/api/users', users);
 
 

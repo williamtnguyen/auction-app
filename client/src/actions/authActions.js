@@ -47,7 +47,7 @@ export const loginUser = userData => dispatch => {
     );
 };
 
-// Setting a logged in user: authenticated if a token was sent back and identified by decoded token
+// Setting a logged in user: authenticated if a token was sent back. User is identified by decoded token
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
