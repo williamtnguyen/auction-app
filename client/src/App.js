@@ -17,6 +17,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login'
 import PrivateRoute from './components/private-route/PrivateRoute';
 import Home from './components/dashboard/Home';
+import MockHome from './components/dashboard/MockHome'
 
 
 // Check for token in localStorage to persist user login
@@ -53,7 +54,7 @@ class App extends Component {
             <Route exact path='/login' component={Login} />
             {/* Private Route: home page */}
             <Switch> 
-              <PrivateRoute exact path='/home' component={Home} />
+              <PrivateRoute exact path='/home' component={MockHome} />
             </Switch>
           </div>
         </Router>
