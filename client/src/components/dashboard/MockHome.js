@@ -9,8 +9,9 @@ import mockPic from '../../images/mario_king.jpg';
 class MockHome extends Component {
 
   componentDidMount() {
-    let sidenav = document.querySelector('#slide-out');
-    M.Sidenav.init(sidenav, {});
+    // let sidenav = document.querySelector('#slide-out');
+    // M.Sidenav.init(sidenav, {});
+    M.AutoInit();
   }
 
   onLogoutClick = (event) => {
@@ -29,9 +30,7 @@ class MockHome extends Component {
           <div className='navbar-fixed'>
             <nav className='grey lighten-4'>
               <a href='#' data-target='slide-out' className='sidenav-trigger show-on-large'>
-                  <i style={{ color: '#000'}} className='material-icons'>
-                    person_outline
-                  </i>
+                  <i style={{ color: '#000'}} className='material-icons'>person</i>
                   {user.name}
               </a>
               <div className='nav-wrapper container'>
@@ -62,7 +61,7 @@ class MockHome extends Component {
             <li>
               <div className='user-view'>
                 <div className='background grey lighten-4'></div>
-                <Link to='/profile'><img className='circle' src=''></img></Link>
+                <Link to='/profile'><img className='circle' src={mockPic}></img></Link>
                 <Link to=''><span class='black-text name'>{user.name}</span></Link>
                 <Link to=''><span class='black-text email'>@GoodSeller</span></Link>
               </div>
@@ -82,11 +81,11 @@ class MockHome extends Component {
             <li><Link onClick={this.onLogoutClick}><i className='material-icons'>power_settings_new</i>Sign Out</Link></li>
           </ul>
 
-          {/* NOT WORKING: Dropdown structure for categories tab */}
+          {/* Dropdown structure for categories tab */}
           <ul id='dropdown1' className='dropdown-content'>
-            <li><a>home appliances</a></li>
-            <li><a>yard, garden, & decor</a></li>
-            <li><a>electronics</a></li>
+            <li style={{ fontSize:'30px' }}><a>home appliances</a></li>
+            <li style={{ fontSize:'30px' }}><a>yard, garden, & decor</a></li>
+            <li style={{ fontSize:'30px' }}><a>electronics</a></li>
           </ul>
         </section>
 
