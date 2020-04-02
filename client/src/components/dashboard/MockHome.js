@@ -38,17 +38,17 @@ class MockHome extends Component {
                 <ul id='nav-mobile' className='left hide-on-med-and-down'>
                   <li><a className='black-text'>home</a></li>
                   <li>
-                    <a className='dropdown-trigger black-text'>
+                    <a className='dropdown-trigger black-text' data-target='dropdown1'>
                       shop by category
                       <i className='material-icons right'>arrow_drop_down</i>
                     </a>
                   </li>
                   <li>
                     <form>
-                      <div class="input-field">
+                      <div className="input-field">
                         <input id="search" type="search" required></input>
-                        <label class="label-icon" for="search"><i class="material-icons black-text">search</i></label>
-                        <i class="material-icons">close</i>
+                        <label className="label-icon" for="search"><i className="material-icons black-text">search</i></label>
+                        <i className="material-icons">close</i>
                       </div>
                     </form>
                   </li>
@@ -72,8 +72,8 @@ class MockHome extends Component {
             <li><div className='divider'></div></li>
 
             <li><Link to='item2'><i className='material-icons'>local_atm</i>Bids/Offers</Link></li>
-            <li><Link to='item3'><i className='material-icons'>check_box</i>Won Bids/Purchased</Link></li>
-            <li><Link to='item1'><i className='material-icons'>inbox</i>Messages</Link></li>
+            <li><Link to='item3'><i className='material-icons'>shopping_cart</i>Won Bids/Purchased</Link></li>
+            <li><Link to='item1'><i className='material-icons'>mail_outline</i>Messages</Link></li>
 
             <li><Link to='' className='subheader'>Account Settings</Link></li>
             <li><div className='divider'></div></li>
@@ -81,11 +81,18 @@ class MockHome extends Component {
             <li><Link to='item1'><i className='material-icons'>settings</i>Edit Profile</Link></li>
             <li><Link onClick={this.onLogoutClick}><i className='material-icons'>power_settings_new</i>Sign Out</Link></li>
           </ul>
+
+          {/* NOT WORKING: Dropdown structure for categories tab */}
+          <ul id='dropdown1' className='dropdown-content'>
+            <li><a>home appliances</a></li>
+            <li><a>yard, garden, & decor</a></li>
+            <li><a>electronics</a></li>
+          </ul>
         </section>
 
         {/* Home-feed */}
         <section className='row'>
-          <div className='row container center'>
+          <div className='row container'>
             <div className='col s3'>
               <div class="card">
                 <div class="card-image">
@@ -132,7 +139,7 @@ class MockHome extends Component {
             </div>
 
           </div>
-          <div className='row container center'>
+          <div className='row container'>
             <div className='col s3'>
               <div class="card">
                 <div class="card-image">
@@ -179,7 +186,7 @@ class MockHome extends Component {
             </div>
 
           </div>
-          <div className='row container center'>
+          <div className='row container'>
             <div className='col s3'>
               <div class="card">
                 <div class="card-image">
