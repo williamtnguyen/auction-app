@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
-import M from 'materialize-css/dist/js/materialize.min.js';
 import { Link } from 'react-router-dom';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 import mockPic from '../../images/mario_king.jpg';
 
@@ -30,18 +30,18 @@ class UtilityNavbar extends Component {
         <section className='row'>
           <div className='navbar-fixed'>
             <nav className='grey lighten-4'>
-              <a href='#' data-target='slide-out' className='sidenav-trigger show-on-large hoverable'>
+              <Link data-target='slide-out' className='sidenav-trigger show-on-large hoverable'>
                   <i style={{ color: '#000'}} className='material-icons'>person</i>
                   {user.name}
-              </a>
+              </Link>
               <div className='nav-wrapper container'>
                 <ul id='nav-mobile' className='left hide-on-med-and-down'>
-                  <li><a className='black-text'>home</a></li>
+                  <li><Link to='/home'className='black-text'>home</Link></li>
                   <li>
-                    <a className='dropdown-trigger black-text' data-target='dropdown1'>
+                    <Link className='dropdown-trigger black-text' data-target='dropdown1'>
                       shop by category
                       <i className='material-icons right'>arrow_drop_down</i>
-                    </a>
+                    </Link>
                   </li>
                   <li>
                   {/* !! Search bar here !! */}

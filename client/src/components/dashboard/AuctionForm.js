@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { postAuction } from '../../actions/appActions';
 import classnames from 'classnames';
+import M from 'materialize-css/dist/js/materialize.min.js';
+
 
 class AuctionForm extends Component {
   constructor() {
@@ -19,6 +21,12 @@ class AuctionForm extends Component {
     // binding 'this' context for event handlers
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    // Character counter for description
+    var inputNeedsCount = document.querySelectorAll('#description');
+    M.CharacterCounter.init(inputNeedsCount);
   }
 
   /* ~~~~ EVENT HANDLERS ~~~~ */
@@ -48,7 +56,7 @@ class AuctionForm extends Component {
     return (
       <div className='container'>
         <div className='row'>
-          <div className='col 28 offset-s2'>
+          <div className='col s8 offset-s2'>
             <Link to='/home' className='btn-flat waves-effect'>
               <i className='material-icons left'>keyboard_backspace</i>Back to dashboard
             </Link>
@@ -80,13 +88,50 @@ class AuctionForm extends Component {
                   value={this.state.description}
                   error={errors.description}
                   id='description'
-                  maxLength='250'
+                  data-length='250'
                   className={classnames('materialize-textarea', {
                     invalid: errors.description
-                  }) }
+                  })}
                 />
                 <label htmlFor='description'>Description</label>
                 <span className='red-text'>{errors.description}</span>
+              </div>
+              {/* starting bid input field */}
+              <div className='input-field col s4'>
+                <i className='material-icons prefix'>attach_money</i>
+                <input 
+                  id='startingBid'
+                  type='number'
+                  placeholder='0.00'
+                  className={classnames('', {
+                    invalid: errors.startingBid
+                  })}
+                />
+                <label htmlFor='startingBid'>Starting Bid</label>
+                <span className='red-text'>{errors.startingBid}</span>
+              </div>
+              {/* buy it now toggle */}
+              <div className="switch col s4">
+                <label>Buy it now: </label>
+                <div>
+                  <label id='buyItNow'>
+                    Off
+                    <input type="checkbox" />
+                    <span className="lever"></span>
+                    On
+                  </label>
+                </div>
+              </div>
+              {/* File upload */}
+              <div className="file-field input-field col s9">
+                <p >Image Upload:</p>
+                <div className="btn waves-effect waves-light hoverable blue lighten-3 black-text">
+                  <span>File</span>
+                  <input id='imageUpload' type="file" multiple />
+                </div>
+                <div className="file-path-wrapper">
+                  <input className="file-path validate" type="text" placeholder="Upload one or more images " />
+                </div>
               </div>
 
               {/* Submit Button */}
@@ -99,7 +144,7 @@ class AuctionForm extends Component {
                     marginTop: '1rem'
                   }}
                   type='submit'
-                  className='btn btn-large waves-effect waves-light hoverable teal lighten-1'
+                  className='btn btn-large waves-effect waves-light hoverable blue lighten-3 black-text'
                 >
                   Post Item
                 </button>
