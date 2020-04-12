@@ -14,10 +14,11 @@ import store from './store';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
-import Login from './components/auth/Login'
+import Login from './components/auth/Login';
 import PrivateRoute from './components/private-route/PrivateRoute';
 import Home from './components/dashboard/Home';
-import MockHome from './components/dashboard/MockHome'
+import MockHome from './components/dashboard/MockHome';
+// import AuctionForm from './components/dashboard/AuctionForm';
 
 
 // Check for token in localStorage to persist user login
@@ -55,6 +56,7 @@ class App extends Component {
             {/* Private Route: home page */}
             <Switch> 
               <PrivateRoute exact path='/home' component={MockHome} />
+              {/* <PrivateRoute exact path='/auctions/new' component={AuctionForm} /> */}
             </Switch>
           </div>
         </Router>

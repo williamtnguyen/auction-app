@@ -18,7 +18,16 @@ const UserSchema = new Schema ({
   date: {
     type: Date, 
     default: Date.now
-  }
+  },
+  // Respective posted auctions/current bids
+  auctions: [{
+    type: Schema.Types.ObjectId,
+    ref: "Auction"
+  }],
+  bids: [{
+    type: Schema.Types.ObjectId,
+    ref: "Bids"
+  }]
 });
 
 const User = mongoose.model("users", UserSchema);

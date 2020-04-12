@@ -18,6 +18,7 @@ class MockHome extends Component {
       <div>
         {/* Utility navbar for users only */}
         <UtilityNavbar />
+        
         {/* Home-feed */}
         <section className='row'>
           <div className='row container'>

@@ -30,7 +30,7 @@ class UtilityNavbar extends Component {
         <section className='row'>
           <div className='navbar-fixed'>
             <nav className='grey lighten-4'>
-              <a href='#' data-target='slide-out' className='sidenav-trigger show-on-large'>
+              <a href='#' data-target='slide-out' className='sidenav-trigger show-on-large hoverable'>
                   <i style={{ color: '#000'}} className='material-icons'>person</i>
                   {user.name}
               </a>
@@ -44,15 +44,16 @@ class UtilityNavbar extends Component {
                     </a>
                   </li>
                   <li>
-                    {/* Todo: put search bar here */}
+                  {/* !! Search bar here !! */}
                   </li>
                 </ul> 
                 <ul id='nav-mobile' className='right hide-on-med-and-down'>
                   <li>
-                    <a class="btn waves-effect waves-light hoverable blue lighten-3 black-text">
+                    <Link to='/auctions/new' 
+                      className='btn waves-effect waves-light hoverable blue lighten-3 black-text'>
                       Post Bidding <i class="material-icons right">add</i>
-                    </a>
-                    </li>
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </nav>
