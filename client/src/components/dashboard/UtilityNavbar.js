@@ -51,7 +51,7 @@ class UtilityNavbar extends Component {
                   <li>
                     <Link to='/auctions/new' 
                       className='btn waves-effect waves-light hoverable blue lighten-3 black-text'>
-                      Post Bidding <i class="material-icons right">add</i>
+                      Post Bidding <i className="material-icons right">add</i>
                     </Link>
                   </li>
                 </ul>
