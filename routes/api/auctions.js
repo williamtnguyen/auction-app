@@ -16,7 +16,7 @@ const User    = require('../../models/User');
  * @desc post a new item for auction
  * @access Public
  */
-router.post('/auctions', (req, res) => {
+router.post('/new', (req, res) => {
   // Form validation
   const { errors, isValid } = validateAuctionInput(req.body);
   // Check input validation
@@ -51,7 +51,7 @@ router.post('/auctions', (req, res) => {
     newAuction: newAuction, 
     author: foundUser
   });
-  
+
 });
 
 module.exports = router;

@@ -4,7 +4,8 @@ const express     = require('express'),
       passport    = require('passport');
       app         = express();
 
-const users = require('./routes/api/users');
+const users       = require('./routes/api/users'),
+      auctions    = require('./routes/api/auctions'); 
 
 // Middleware for getting input from client-side
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,6 +26,7 @@ require('./config/passport')(passport);
 
 // ~~~~ API endpoints for auth ~~~~ //
 app.use('/api/users', users);
+app.use('/api/auctions', auctions);
 
 
 // Starts the server on localhost
