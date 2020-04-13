@@ -20,6 +20,7 @@ class AuctionForm extends Component {
     };
     // binding 'this' context for event handlers
     this.handleChange = this.handleChange.bind(this);
+    // this.handleBuyItNowToggle = this.handleBuyItNowToggle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -29,23 +30,43 @@ class AuctionForm extends Component {
     M.CharacterCounter.init(inputNeedsCount);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   /* ~~~~ EVENT HANDLERS ~~~~ */
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value })
   }
+  handleBuyItNowToggle() {
+    this.setState(prevState => ({
+      hasBuyItNow: !prevState.hasBuyItNow
+    }));
+  }
+
+  // It is bad practice to update state like this if it depends on the previous state (aynchronous state updates may fuck it up)
+  // handleBuyItNowToggle() {
+  //   this.setState({ hasBuyItNow: !this.state.hasBuyItNow })
+  // }
 
   handleSubmit(event) {
     // preventDefault stops the page from reloading when submit button is clicked
     event.preventDefault();
     // Todo: create auction object (will be sent to backend via Redux)
     const newAuction = {
+      author: this.props.auth.user, // passing this to use on the server side
       title: this.state.title,
       description: this.state.description,
-      startingBid: this.state.startingBid,
+      startingBid: this.state.startingBid, 
       hasBuyItNow: this.state.hasBuyItNow,
       buyItNow: this.state.buyItNow
     };
     console.log(newAuction);
+
     // TODO: write appActions.js and the postAuction method
     // this.props.postAuction(newAuction);
   }
@@ -100,6 +121,7 @@ class AuctionForm extends Component {
               <div className='input-field col s4'>
                 <i className='material-icons prefix'>attach_money</i>
                 <input 
+                  onChange={this.handleChange}
                   id='startingBid'
                   type='number'
                   placeholder='0.00'
@@ -110,13 +132,18 @@ class AuctionForm extends Component {
                 <label htmlFor='startingBid'>Starting Bid</label>
                 <span className='red-text'>{errors.startingBid}</span>
               </div>
-              {/* buy it now toggle */}
+              {/* Buy it now toggle */}
               <div className="switch col s4">
                 <label>Buy it now: </label>
                 <div>
-                  <label id='buyItNow'>
+                  <label>
                     Off
-                    <input type="checkbox" />
+                    <input 
+                      onClick={this.handleBuyItNowToggle}
+                      id='hasBuyItNow'
+                      type="checkbox" 
+                      value={true} // will send 'true' in post value if toggled, otherwise it is empty
+                    />
                     <span className="lever"></span>
                     On
                   </label>
@@ -124,7 +151,7 @@ class AuctionForm extends Component {
               </div>
               {/* File upload */}
               <div className="file-field input-field col s9">
-                <p >Image Upload:</p>
+                <p>Image Upload:</p>
                 <div className="btn waves-effect waves-light hoverable blue lighten-3 black-text">
                   <span>File</span>
                   <input id='imageUpload' type="file" multiple />
@@ -157,4 +184,18 @@ class AuctionForm extends Component {
   }
 }
 
-export default AuctionForm;
+AuctionForm.propTypes = {
+  postAuction: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  // { postAuction }
+) (AuctionForm);

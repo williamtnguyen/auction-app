@@ -4,8 +4,14 @@ const mongoose = require('mongoose'),
 // Schema/Model for Auction in the DB
 const AuctionSchema = new Schema ({
   author: {
-    type: String,
-    required: true
+    id: {
+      type: Number,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
   },
   title: {
     type: String,
@@ -15,9 +21,11 @@ const AuctionSchema = new Schema ({
     type: String,
     required: true
   },
+  // initially 'startingBid', this field is subject be updated; hence 'currentBid'
   currentBid: {
     type: Number,
-    default: 0.00
+    default: 0.00,
+    required: true
   },
   hasBuyItNow: {
     type: Boolean,
