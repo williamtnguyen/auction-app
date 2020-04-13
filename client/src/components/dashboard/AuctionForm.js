@@ -20,7 +20,7 @@ class AuctionForm extends Component {
     };
     // binding 'this' context for event handlers
     this.handleChange = this.handleChange.bind(this);
-    // this.handleBuyItNowToggle = this.handleBuyItNowToggle.bind(this);
+    this.handleBuyItNowToggle = this.handleBuyItNowToggle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
