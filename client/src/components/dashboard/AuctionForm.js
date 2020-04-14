@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { postAuction } from '../../actions/appActions';
+import { postAuction } from '../../actions/auctionActions';
 import classnames from 'classnames';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
@@ -32,6 +32,10 @@ class AuctionForm extends Component {
 
   // Deprecated vvv revise this with new lifecycle function
   componentWillReceiveProps(nextProps) {
+    // when form is submitted, 'isUpdated' becomes true, redirect
+    if(nextProps.auction.isUpdated) {
+      this.props.history.push('/home');
+    }
     if(nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -58,7 +62,7 @@ class AuctionForm extends Component {
     // preventDefault stops the page from reloading when submit button is clicked
     event.preventDefault();
     // Todo: create auction object (will be sent to backend via Redux)
-    const newAuction = {
+    const auctionData = {
       authorID: this.props.auth.user.id, // passing this to use on the server side
       authorName: this.props.auth.user.name,
       title: this.state.title,
@@ -67,10 +71,10 @@ class AuctionForm extends Component {
       hasBuyItNow: this.state.hasBuyItNow,
       buyItNow: this.state.buyItNow
     };
-    console.log(newAuction);
+    console.log(auctionData);
 
     // TODO: write appActions.js and the postAuction method
-    // this.props.postAuction(newAuction);
+    this.props.postAuction(auctionData);
   }
 
 
@@ -189,17 +193,19 @@ class AuctionForm extends Component {
 }
 
 AuctionForm.propTypes = {
-  // postAuction: PropTypes.func.isRequired,
+  postAuction: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  auction: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  auction: state.auction
 });
 
 export default connect(
   mapStateToProps,
-  // { postAuction }
+  { postAuction }
 ) (AuctionForm);

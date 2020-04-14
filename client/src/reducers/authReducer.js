@@ -18,7 +18,7 @@ export default function(state = initialState, action) {
       return {
         ...state, // triple dot notation ex: this.props.state={a:1, b:2} --> a={this.props.a}, b={this.props.b}
         isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
+        user: action.payload // user object is the decoded JWT
       };
     case USER_LOADING:
       return {
