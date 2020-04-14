@@ -24,34 +24,36 @@ router.post('/new', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const authorID      = req.body.author.id,
-        authorName    = req.body.author.name;
+  const authorID      = req.body.authorID,
+        authorName    = req.body.authorName;
 
   // Otherwise, valid inputs. Create the auction post
   const newAuction = new Auction({
-    author: { authorID, authorName }, // Storing the posts' author ID & name
+    author: { id: authorID, name: authorName }, // Storing the posts' author ID & name
     title: req.body.title, 
     description: req.body.description,
     currentBid: req.body.startingBid,
     hasBuyItNow: req.body.hasBuyItNow,
     buyItNow: req.body.buyItNow
   });
+  newAuction.save(err => {
+    return console.log(err);
+  });
 
   // Find the respective author and add 'newAuction' to their 'auctions' array
   User.findById(authorID, (err, foundUser) => {
     if(err) {
-      return console.log('Error' + err);
+      return console.log('Could not find OP for auction: ' + err);
     }
     foundUser.auctions.push(newAuction);
     foundUser.save();
+    
+    // For postman/api testing
+    res.json({
+      newAuction: newAuction, 
+      author: foundUser
+    });
   });
-  
-  // For postman/api testing
-  res.json({
-    newAuction: newAuction, 
-    author: foundUser
-  });
-
 });
 
 module.exports = router;

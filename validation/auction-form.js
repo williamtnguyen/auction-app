@@ -11,9 +11,14 @@ function validateAuctionInput(data) {
   data.title = !isEmpty(data.title) ? data.title : "";
   data.description = !isEmpty(data.description) ? data.description : "";
   data.startingBid = !isEmpty(data.startingBid) ? data.startingBid : "";
-  // If this field is true, 
-  if(data.hasBuyItNow) {
+
+  // If this field is true, then we need to validate the buyItNow entry as well
+  const hasBuyItNow = data.hasBuyItNow == 'true';
+  if(hasBuyItNow) {
     data.buyItNow = !isEmpty(data.buyItNow) ? data.buyItNow : "";
+
+    if(Validator.isEmpty(data.buyItNow)) { errors.buyItNow = 'Buy it now field is required' }
+    else if(!Validator.isNumeric(data.buyItNow)) { errors.buyItNow = 'Price requires a numeric value' }
   }
 
   // Title validation

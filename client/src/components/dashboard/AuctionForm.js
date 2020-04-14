@@ -30,6 +30,7 @@ class AuctionForm extends Component {
     M.CharacterCounter.init(inputNeedsCount);
   }
 
+  // Deprecated vvv revise this with new lifecycle function
   componentWillReceiveProps(nextProps) {
     if(nextProps.errors) {
       this.setState({
@@ -58,7 +59,8 @@ class AuctionForm extends Component {
     event.preventDefault();
     // Todo: create auction object (will be sent to backend via Redux)
     const newAuction = {
-      author: this.props.auth.user, // passing this to use on the server side
+      authorID: this.props.auth.user.id, // passing this to use on the server side
+      authorName: this.props.auth.user.name,
       title: this.state.title,
       description: this.state.description,
       startingBid: this.state.startingBid, 
@@ -149,12 +151,14 @@ class AuctionForm extends Component {
                   </label>
                 </div>
               </div>
+              {/* Todo: buyItNow field that shows only if the toggle is on */}
+
               {/* File upload */}
               <div className="file-field input-field col s9">
                 <p>Image Upload:</p>
                 <div className="btn waves-effect waves-light hoverable blue lighten-3 black-text">
                   <span>File</span>
-                  <input id='imageUpload' type="file" multiple />
+                  <input type="file" multiple />
                 </div>
                 <div className="file-path-wrapper">
                   <input className="file-path validate" type="text" placeholder="Upload one or more images " />
@@ -185,7 +189,7 @@ class AuctionForm extends Component {
 }
 
 AuctionForm.propTypes = {
-  postAuction: PropTypes.func.isRequired,
+  // postAuction: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 }

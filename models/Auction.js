@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
 const AuctionSchema = new Schema ({
   author: {
     id: {
-      type: Number,
+      type: String,
       required: true
     },
     name: {
