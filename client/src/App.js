@@ -55,7 +55,7 @@ class App extends Component {
             <Route exact path='/login' component={Login} />
             {/* Private Route: home page */}
             <Switch> 
-              <PrivateRoute exact path='/home' component={MockHome} />
+              <PrivateRoute exact path='/auctions' component={MockHome} />
               <PrivateRoute exact path='/auctions/new' component={AuctionForm} />
             </Switch>
           </div>

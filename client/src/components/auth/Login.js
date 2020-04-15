@@ -30,7 +30,7 @@ class Login extends Component {
   componentWillReceiveProps(nextProps) {
     // redirect user to home-feed when logged-in
     if(nextProps.auth.isAuthenticated) {
-      this.props.history.push('/home');
+      this.props.history.push('/auctions');
     }
     if(nextProps.errors) {
       this.setState({
