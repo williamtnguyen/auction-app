@@ -22,7 +22,7 @@ class Login extends Component {
   // If user is already logged in and tries to access this route, should redirect to home
   componentDidMount() {
     if(this.props.auth.isAuthenticated) {
-      this.props.history.push('/home');
+      this.props.history.push('/auctions');
     }
   }
 
