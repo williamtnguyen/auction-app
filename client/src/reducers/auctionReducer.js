@@ -1,19 +1,18 @@
 import {
-  UPDATE_FEED
+  POST_AUCTION
 } from '../actions/types';
 
 const initialState = {
-  isUpdated: false,
+  isPosted: false,
 };
 
 export default function(state = initialState, action) {
   switch(action.type) {
-    // This reducing function just allows the feed to 
-    // refresh when auctions are posted
-    case UPDATE_FEED:
+    // This reducing function just allows redirect to homefeed on successful posting
+    case POST_AUCTION:
       return {
         ...state,
-        isUpdated: true
+        isPosted: true
       };
     default:
       return state;

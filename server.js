@@ -24,7 +24,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 
-// ~~~~ API endpoints for auth ~~~~ //
+// ~~~~ API endpoints ~~~~ //
 app.use('/api/users', users);
 app.use('/api/auctions', auctions);
 

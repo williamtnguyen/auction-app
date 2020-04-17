@@ -32,9 +32,9 @@ class AuctionForm extends Component {
 
   // Deprecated vvv revise this with new lifecycle function
   componentWillReceiveProps(nextProps) {
-    // when form is submitted, 'isUpdated' becomes true, redirect
-    if(nextProps.auction.isUpdated) {
-      this.props.history.push('/home');
+    // when form is sucessfully submitted, 'isPosted' becomes true, redirect
+    if(nextProps.auction.isPosted) {
+      this.props.history.push('/auctions');
     }
     if(nextProps.errors) {
       this.setState({

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {
   GET_ERRORS,
-  UPDATE_FEED
+  POST_AUCTION
 } from './types';
 
 // Post an auction
@@ -21,6 +21,6 @@ export const postAuction = (auctionData) => dispatch => {
 // This reducing function will update the state so that home feed refreshes
 export const updateFeed = () => {
   return {
-    type: UPDATE_FEED
+    type: POST_AUCTION
   };
 };
