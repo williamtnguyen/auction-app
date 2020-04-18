@@ -44,12 +44,14 @@ class Home extends Component {
 
           {this.state.auctions.map(auction => (
             <div key={auction.id} className='col s3'>
-              <div className='card'>
+              <div className='card small'>
                 <div className='card-image'>
-                  <img src={mockPic} alt=''></img>
+                  <img src={mockPic} className='responsive-img'alt=''></img>
                 </div>
                 <div className='card-content'>
-                  <span className='card-title'>{auction.title}</span>
+                  <span className='card-title' style={{fontSize:'1.2rem', fontWeight:'430'}}>
+                    {auction.title}
+                  </span>
                   <p>${auction.currentBid}</p>
                 </div>
               </div>
