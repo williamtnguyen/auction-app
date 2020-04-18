@@ -16,8 +16,8 @@ import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import PrivateRoute from './components/private-route/PrivateRoute';
-// import Home from './components/dashboard/Home';
-import MockHome from './components/dashboard/MockHome';
+// import MockHome from './components/dashboard/MockHome';
+import Home from './components/dashboard/Home';
 import AuctionForm from './components/dashboard/AuctionForm';
 
 
@@ -55,7 +55,7 @@ class App extends Component {
             <Route exact path='/login' component={Login} />
             {/* Private Route: home page */}
             <Switch> 
-              <PrivateRoute exact path='/auctions' component={MockHome} />
+              <PrivateRoute exact path='/auctions' component={Home} />
               <PrivateRoute exact path='/auctions/new' component={AuctionForm} />
             </Switch>
           </div>

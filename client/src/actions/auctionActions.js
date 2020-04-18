@@ -8,8 +8,8 @@ import {
 // Post an auction
 export const postAuction = (auctionData) => dispatch => {
   axios
-    .post('/api/auctions/new', auctionData)
-    .then(res => dispatch(updateFeed()))
+    .post('/api/auctions/', auctionData)
+    .then(res => dispatch(redirectHome()))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -19,7 +19,7 @@ export const postAuction = (auctionData) => dispatch => {
 };
 
 // This reducing function will update the state so that home feed refreshes
-export const updateFeed = () => {
+export const redirectHome = () => {
   return {
     type: POST_AUCTION
   };

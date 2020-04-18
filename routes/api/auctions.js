@@ -10,13 +10,33 @@ const validateAuctionInput = require('../../validation/auction-form');
 const Auction = require('../../models/Auction');
 const User    = require('../../models/User');
 
+
 /**
- * AUCTION ENDPOINT
- * @route POST api/auctions
- * @desc post a new item for auction
+ * AUCTION 'INDEX' ENDPOINT
+ * @route GET api/auctions
+ * @desc res --> all auctions
  * @access Public
  */
-router.post('/new', (req, res) => {
+router.get('/', (req, res) => {
+  /* TODO: conditional statements depending on category filter */
+
+  // Get all auctions from DB and send them off as JSON 
+  Auction.find({}, (err, allAuctions) => {
+    if(err) { 
+      return console.log(`No auctions found: ${err}`); 
+    }
+    res.json(allAuctions);
+  });
+});
+
+
+/**
+ * AUCTION 'CREATE' ENDPOINT
+ * @route POST api/auctions
+ * @desc create a new item for auction, then redirect
+ * @access Public
+ */
+router.post('/', (req, res) => {
   // Form validation
   const { errors, isValid } = validateAuctionInput(req.body);
   // Check input validation

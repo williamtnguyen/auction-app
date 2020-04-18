@@ -1,51 +1,68 @@
 import React, { Component } from 'react';
+// import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
+import axios from 'axios';
+
+import M from 'materialize-css/dist/js/materialize.min.js';
+import mockPic from '../../images/mario_king.jpg';
+
+// Home component aggregates UtilityNavbar component
+import UtilityNavbar from './UtilityNavbar'
+
 
 class Home extends Component {
-  // quick lil logout arrow func
-  onLogoutClick = (event) => {
-    event.preventDefault();
-    this.props.logoutUser();
-  };
+  constructor() {
+    super();
+    this.state = {
+      auctions: []
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get('./api/auctions')
+      .then(res => {
+        const allAuctions = res.data;
+        console.log(allAuctions)
+        this.setState({ auctions: allAuctions })
+      })
+
+    // jQuery and JS for materialize.css
+    M.AutoInit();
+  }
+
 
   render() {
-    const user = this.props.auth.user;
-    
     return (
-      <div style={{ height: '75vh' }} className='container valign-wrapper'>
-        <div className='row'>
-          <div className='col s12 center-align'>
-            <h4>
-              <b>Welcome back,</b> {user.name.split(" ")[0]}
-              <p className='flow-text grey-text text-darken-1'>
-                here's a feed of currently{' '}
-                <span style={{ fontFamily: 'monospace' }}>auctioning</span> items 😳🔥
-              </p>
-            </h4>
-            {/* Logout button */}
-            <button 
-              style={{
-                width: '150px',
-                borderRadius: '3px',
-                letterSpacing: '1.5px',
-                marginTop: '1rem'
-              }}
-              onClick={this.onLogoutClick}
-              className='btn btn-large waves-effect waves-light hoverable teal lighten-1'
-            >
-              Logout
-            </button>
-          </div>
-        </div>
+      <div>
+        {/* Utility navbar for users only */}
+        <UtilityNavbar />
+        
+        {/* Home-feed */}
+        <section className='row container'>
+
+          {this.state.auctions.map(auction => (
+            <div key={auction.id} className='col s3'>
+              <div className='card'>
+                <div className='card-image'>
+                  <img src={mockPic} alt=''></img>
+                </div>
+                <div className='card-content'>
+                  <span className='card-title'>{auction.title}</span>
+                  <p>${auction.currentBid}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+
+        </section>
       </div>
     );
   }
 }
 
 Home.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 }
 
@@ -55,5 +72,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, 
-  { logoutUser }
+  { }
 ) (Home);

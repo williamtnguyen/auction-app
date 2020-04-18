@@ -30,7 +30,7 @@ class UtilityNavbar extends Component {
         <section className='row'>
           <div className='navbar-fixed'>
             <nav className='grey lighten-4'>
-              <Link data-target='slide-out' className='sidenav-trigger show-on-large hoverable'>
+              <Link to='' data-target='slide-out' className='sidenav-trigger show-on-large hoverable'>
                   <i style={{ color: '#000'}} className='material-icons'>person</i>
                   {user.name}
               </Link>
@@ -38,7 +38,7 @@ class UtilityNavbar extends Component {
                 <ul id='nav-mobile' className='left hide-on-med-and-down'>
                   <li><Link to='/home'className='black-text'>home</Link></li>
                   <li>
-                    <Link className='dropdown-trigger black-text' data-target='dropdown1'>
+                    <Link to='' className='dropdown-trigger black-text' data-target='dropdown1'>
                       shop by category
                       <i className='material-icons right'>arrow_drop_down</i>
                     </Link>
@@ -64,9 +64,9 @@ class UtilityNavbar extends Component {
             <li>
               <div className='user-view'>
                 <div className='background grey lighten-4'></div>
-                <Link to='/profile'><img className='circle' src={mockPic}></img></Link>
-                <Link to=''><span class='black-text name'>{user.name}</span></Link>
-                <Link to=''><span class='black-text email'>@GoodSeller</span></Link>
+                <Link to='/profile'><img className='circle' src={mockPic} alt=''></img></Link>
+                <Link to=''><span className='black-text name'>{user.name}</span></Link>
+                <Link to=''><span className='black-text email'>@GoodSeller</span></Link>
               </div>
             </li>
 
@@ -81,7 +81,7 @@ class UtilityNavbar extends Component {
             <li><div className='divider'></div></li>
 
             <li><Link to='item1'><i className='material-icons'>settings</i>Edit Profile</Link></li>
-            <li><Link onClick={this.onLogoutClick}><i className='material-icons'>power_settings_new</i>Sign Out</Link></li>
+            <li><Link to='' onClick={this.onLogoutClick}><i className='material-icons'>power_settings_new</i>Sign Out</Link></li>
           </ul>
 
           {/* Dropdown structure for categories tab */}

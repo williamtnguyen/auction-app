@@ -1,174 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { logoutUser } from '../../actions/authActions';
-import M from 'materialize-css/dist/js/materialize.min.js';
-// import { Link } from 'react-router-dom';
-import mockPic from '../../images/mario_king.jpg';
-import UtilityNavbar from './UtilityNavbar'
+import { logoutUser } from '../../actions/authActions';
 
 class MockHome extends Component {
-
-  componentDidMount() {
-    M.AutoInit();
-  }
+  // quick lil logout arrow func
+  onLogoutClick = (event) => {
+    event.preventDefault();
+    this.props.logoutUser();
+  };
 
   render() {
+    const user = this.props.auth.user;
+    
     return (
-      <div>
-        {/* Utility navbar for users only */}
-        <UtilityNavbar />
-        
-        {/* Home-feed */}
-        <section className='row'>
-          <div className='row container'>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-
+      <div style={{ height: '75vh' }} className='container valign-wrapper'>
+        <div className='row'>
+          <div className='col s12 center-align'>
+            <h4>
+              <b>Welcome back,</b> {user.name.split(" ")[0]}
+              <p className='flow-text grey-text text-darken-1'>
+                here's a feed of currently{' '}
+                <span style={{ fontFamily: 'monospace' }}>auctioning</span> items 😳🔥
+              </p>
+            </h4>
+            {/* Logout button */}
+            <button 
+              style={{
+                width: '150px',
+                borderRadius: '3px',
+                letterSpacing: '1.5px',
+                marginTop: '1rem'
+              }}
+              onClick={this.onLogoutClick}
+              className='btn btn-large waves-effect waves-light hoverable teal lighten-1'
+            >
+              Logout
+            </button>
           </div>
-          <div className='row container'>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div className='row container'>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-            <div className='col s3'>
-              <div class="card">
-                <div class="card-image">
-                  <img src={mockPic}></img>
-                </div>
-                <div class="card-content">
-                  <span class="card-title">Toilet Paper</span>  
-                  <p>$6969</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
+        </div>
       </div>
     );
   }
 }
 
 MockHome.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 }
 
@@ -178,5 +55,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps, 
-  { }
+  { logoutUser }
 ) (MockHome);
