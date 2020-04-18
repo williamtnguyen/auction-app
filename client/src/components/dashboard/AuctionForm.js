@@ -84,7 +84,7 @@ class AuctionForm extends Component {
       <div className='container'>
         <div className='row'>
           <div className='col s8 offset-s2'>
-            <Link to='/home' className='btn-flat waves-effect'>
+            <Link to='/auctions' className='btn-flat waves-effect'>
               <i className='material-icons left'>keyboard_backspace</i>Back to dashboard
             </Link>
             <div className='col s12' style={{ paddingLeft: '11.25px'}}>
