@@ -1,14 +1,39 @@
 const express = require('express'),
-      router  = express.Router();
-      // bcrypt  = require('bcryptjs'),
-      // jwt     = require('jsonwebtoken'),
+      router  = express.Router(),
+      multer  = require('multer');
+
+
+// Load Auction & User model
+const Auction = require('../../models/Auction');
+const User    = require('../../models/User');
 
 // Load input validation
 const validateAuctionInput = require('../../validation/auction-form');
 
-// Load Auction model
-const Auction = require('../../models/Auction');
-const User    = require('../../models/User');
+/* Configuring Multer diskStorage for file uploads */
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, './uploads/');
+  },
+  filename: (req, file, callback) => {
+    const fileExtension = (file.mimetype === 'image/jpeg') ? '.jpg' : '.png';
+    callback(null, file.fieldname + '_' + new Date().toISOString() + fileExtension);
+  }  
+});
+const fileFilter = (req, file, callback) => {
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    callback(null, true);
+  } else {
+    callback(null, false);
+  }
+}
+const upload = multer({ 
+  storage: storage, 
+  limits: {
+    fileSize: 1024 * 1024 * 5 // 5MB max size
+  },
+  fileFilter: fileFilter
+});
 
 
 /**
@@ -36,7 +61,7 @@ router.get('/', (req, res) => {
  * @desc create a new item for auction, then redirect
  * @access Public
  */
-router.post('/', (req, res) => {
+router.post('/', upload.single('productImage'), (req, res) => {
   // Form validation
   const { errors, isValid } = validateAuctionInput(req.body);
   // Check input validation
@@ -47,6 +72,8 @@ router.post('/', (req, res) => {
   const authorID      = req.body.authorID,
         authorName    = req.body.authorName;
 
+  console.log(req.file);
+  console.log(req.body);
   // Otherwise, valid inputs. Create the auction post
   const newAuction = new Auction({
     author: { id: authorID, name: authorName }, // Storing the posts' author ID & name
@@ -54,7 +81,8 @@ router.post('/', (req, res) => {
     description: req.body.description,
     currentBid: req.body.startingBid,
     hasBuyItNow: req.body.hasBuyItNow,
-    buyItNow: req.body.buyItNow
+    buyItNow: req.body.buyItNow,
+    productImage: req.file.path // req.file object comes from multer's 'upload.single()' middleware
   });
   newAuction.save(err => {
     return console.log(err);
@@ -75,5 +103,6 @@ router.post('/', (req, res) => {
     });
   });
 });
+
 
 module.exports = router;

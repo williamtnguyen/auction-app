@@ -71,9 +71,7 @@ class AuctionForm extends Component {
       hasBuyItNow: this.state.hasBuyItNow,
       buyItNow: this.state.buyItNow
     };
-    console.log(auctionData);
-
-    // TODO: write appActions.js and the postAuction method
+    // console.log(auctionData);
     this.props.postAuction(auctionData);
   }
 

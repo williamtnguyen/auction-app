@@ -11,6 +11,9 @@ const users       = require('./routes/api/users'),
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// Makes './uploads' folder from Multer public so that client-side can access the API endpoints
+app.use('/uploads/', express.static('uploads'));
+
 // DB Config
 const db = require('./config/keys').mongoURI;
 // Connecting to MongoDB Atlas 

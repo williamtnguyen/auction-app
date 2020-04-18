@@ -34,6 +34,10 @@ const AuctionSchema = new Schema ({
   buyItNow: {
     type: Number
   },
+  productImage: {
+    type: String,
+    required: true
+  },
   dateCreated: {
     type: Date,
     default: Date.now
