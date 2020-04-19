@@ -5,13 +5,13 @@ Auctioneer is a full-stack web application built with a MERN stack:
 * React v16.13.0 and Redux v4.0.5 for client-side application/state management
 * Node v12.6.0 as a server/client runtime environment
 * The app is also built with cool npm packages such as:
-  * passport-jwt for JWT authentication
-  * bcryptjs for password-salt hashing
-  * validator for input validation
-  * multer for file-input POST endpoints
+  * [passport-jwt](http://www.passportjs.org/packages/passport-jwt/) for JWT authentication
+  * [bcryptjs](https://github.com/kelektiv/node.bcrypt.js/) for password-salt hashing
+  * [validator](https://github.com/validatorjs/validator.js) for input validation
+  * [multer](https://github.com/expressjs/multer) for file-input POST endpoints
 
 ## Installation 
-With npm-scripts (located in ./package.json), installing the dependencies on both the server/client side can be done in the root directory:
+With npm-scripts *(located in ./package.json)*, installing the dependencies on both the client/server side can be done in the root directory:
 ```shell
 $ npm install
 $ npm run client-install
@@ -29,3 +29,7 @@ Likewise, the React application can be started individually as well:
 ```shell
 $ npm run client
 ```
+
+## Project Architecture
+User stories and business logic can be inferred from the following UI Transition Diagram:
+<img src='[Imgur](https://i.imgur.com/HjcudXg.jpg' title='UIDiagram' width='' alt=''/>
