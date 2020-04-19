@@ -17,9 +17,15 @@ $ npm install
 $ npm run client-install
 ```
 ### Starting Servers Concurrently
-Leveraging [concurrently](https://github.com/kimmobrunfeldt/concurrently) v5.1.0 allows both the Express and React servers to be started concurrently (i.e., without needing two terminals) from the root directory. 
+Leveraging [concurrently](https://github.com/kimmobrunfeldt/concurrently) v5.1.0 allows both the Express server and React application to be started concurrently (i.e., without needing two terminals) from the root directory. 
 ```shell
 $ npm run dev
 ```
 Alternatively, the Express server can be started individually for API testing:
 ```shell
+$ npm run server
+```
+Likewise, the React application can be started individually as well:
+```shell
+$ npm run client
+```
