@@ -156,6 +156,7 @@ class AuctionForm extends Component {
               {/* Todo: buyItNow field that shows only if the toggle is on */}
 
               {/* File upload */}
+              {/* TODO: connect this input with the component state and handleSubmit portion */}
               <div className="file-field input-field col s9">
                 <p>Image Upload:</p>
                 <div className="btn waves-effect waves-light hoverable blue lighten-3 black-text">
