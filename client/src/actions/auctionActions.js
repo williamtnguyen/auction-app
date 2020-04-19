@@ -7,8 +7,9 @@ import {
 
 // Post an auction
 export const postAuction = (auctionData) => dispatch => {
+  const formData = makeFormData(auctionData);
   axios
-    .post('/api/auctions/', auctionData)
+    .post('/api/auctions/', formData)
     .then(res => dispatch(redirectHome()))
     .catch(err => {
       dispatch({
@@ -17,6 +18,17 @@ export const postAuction = (auctionData) => dispatch => {
       })
     })
 };
+
+// Creates a FormData object to pass to API
+export const makeFormData = (auctionData) => {
+  const formData = new FormData();
+  const entries = Object.entries(auctionData);
+  
+  for(const [key, value] of entries) {
+    formData.append(`${key}`, value);
+  }
+  return formData;
+}
 
 // This reducing function will update the state so that home feed refreshes
 export const redirectHome = () => {

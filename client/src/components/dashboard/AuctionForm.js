@@ -16,12 +16,14 @@ class AuctionForm extends Component {
       startingBid: 0.00,
       hasBuyItNow: false,
       buyItNow: 0.00,
+      productImage: '',
       errors: {}
     };
     // binding 'this' context for event handlers
     this.handleChange = this.handleChange.bind(this);
     this.handleBuyItNowToggle = this.handleBuyItNowToggle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +54,9 @@ class AuctionForm extends Component {
       hasBuyItNow: !prevState.hasBuyItNow
     }));
   }
+  handleFileUpload(event) {
+    this.setState({ [event.target.id]: event.target.files[0] })
+  }
 
   // It is bad practice to update state like this if it depends on the previous state (aynchronous state updates may fuck it up)
   // handleBuyItNowToggle() {
@@ -69,7 +74,8 @@ class AuctionForm extends Component {
       description: this.state.description,
       startingBid: this.state.startingBid, 
       hasBuyItNow: this.state.hasBuyItNow,
-      buyItNow: this.state.buyItNow
+      buyItNow: this.state.buyItNow,
+      productImage: this.state.productImage
     };
     // console.log(auctionData);
     this.props.postAuction(auctionData);
@@ -161,7 +167,11 @@ class AuctionForm extends Component {
                 <p>Image Upload:</p>
                 <div className="btn waves-effect waves-light hoverable blue lighten-3 black-text">
                   <span>File</span>
-                  <input type="file" multiple />
+                  <input 
+                    onChange={this.handleFileUpload} 
+                    id="productImage"
+                    type="file" 
+                    multiple />
                 </div>
                 <div className="file-path-wrapper">
                   <input className="file-path validate" type="text" placeholder="Upload one or more images " />

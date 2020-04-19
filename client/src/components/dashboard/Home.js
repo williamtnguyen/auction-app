@@ -46,10 +46,10 @@ class Home extends Component {
             <div key={auction.id} className='col s3'>
               <div className='card small'>
                 <div className='card-image'>
-                  <img src={mockPic} className='responsive-img'alt=''></img>
+                  <img src={auction.productImage} className='responsive-img'alt=''></img>
                 </div>
                 <div className='card-content'>
-                  <span className='card-title' style={{fontSize:'1.2rem', fontWeight:'430'}}>
+                  <span className='card-title' style={{fontSize:'1.1rem', fontWeight:'440'}}>
                     {auction.title}
                   </span>
                   <p>${auction.currentBid}</p>

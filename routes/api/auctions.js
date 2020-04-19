@@ -10,14 +10,14 @@ const User    = require('../../models/User');
 // Load input validation
 const validateAuctionInput = require('../../validation/auction-form');
 
-/* Configuring Multer diskStorage for file uploads */
+/* Configuring Multer Storage Engine for file uploads */
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, './uploads/');
   },
   filename: (req, file, callback) => {
     const fileExtension = (file.mimetype === 'image/jpeg') ? '.jpg' : '.png';
-    callback(null, file.fieldname + '_' + new Date().toISOString() + fileExtension);
+    callback(null, file.fieldname + '_' + Date.now() + fileExtension);
   }  
 });
 const fileFilter = (req, file, callback) => {
@@ -72,8 +72,9 @@ router.post('/', upload.single('productImage'), (req, res) => {
   const authorID      = req.body.authorID,
         authorName    = req.body.authorName;
 
-  console.log(req.file);
-  console.log(req.body);
+  // console.log(req.file);
+  // console.log(req.body);
+  
   // Otherwise, valid inputs. Create the auction post
   const newAuction = new Auction({
     author: { id: authorID, name: authorName }, // Storing the posts' author ID & name
