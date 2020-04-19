@@ -32,4 +32,4 @@ $ npm run client
 
 ## Project Architecture
 User stories and business logic can be inferred from the following UI Transition Diagram:
-<img src='[Imgur](https://i.imgur.com/HjcudXg.jpg' title='UIDiagram' width='' alt=''/>
+<img src='https://i.imgur.com/HjcudXg.jpg' title='UIDiagram' width='' alt=''/>
