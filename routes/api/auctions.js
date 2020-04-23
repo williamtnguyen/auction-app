@@ -56,6 +56,22 @@ router.get('/', (req, res) => {
 
 
 /**
+ * AUCTION 'SHOW' ENDPOINT
+ * @route GET api/auctions/:auctionID
+ * @desc res --> one auction
+ * @access Public
+ */
+router.get('/:auctionID', (req, res) => {
+  Auction.findById(req.params.auctionID, (err, auction) => {
+    if(err) {
+      return console.log(`No auction found under this ID: ${err}`);
+    }
+    res.json(auction);
+  });
+});
+
+
+/**
  * AUCTION 'CREATE' ENDPOINT
  * @route POST api/auctions
  * @desc create a new item for auction, then redirect
