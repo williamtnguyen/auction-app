@@ -8,7 +8,8 @@ const Auction = require('../../models/Auction');
 const User    = require('../../models/User');
 
 // Load input validation
-const validateAuctionInput = require('../../validation/auction-form');
+const validateAuctionInput = require('../../validation/auctionForm');
+const validateAuctionBid   = require('../../validation/auctionBid');
 
 /* Configuring Multer Storage Engine for file uploads */
 const storage = multer.diskStorage({
@@ -119,6 +120,42 @@ router.post('/', upload.single('productImage'), (req, res) => {
       author: foundUser
     });
   });
+});
+
+
+/**
+ * AUCTION 'UPDATE' ENDPOINT
+ * @route PUT /api/auctions/:auctionID
+ * @access Public
+ */
+router.put('/:auctionID', (req, res) => {
+  // Form validation
+  const { errors, isValid } = validateAuctionBid(req.body);
+  if(!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const newBidder = req.body.newBidder,
+        newBid    = req.body.newBid;
+
+  Auction.findById(req.params.id, (err, foundAuction) => {
+    if(err) {
+      return console.log(`This is a really bad error: ${err}`)
+    }
+    // Server-side validation
+    if(foundAuction.currentBid + 1 > newBid) {
+      let newBidError = { newBid: `You must bid ${foundAuction.currentBid + 1} or more`}
+      return res.status(400).json(newBidError);
+    }
+    foundAuction.currentBid = newBid;
+    foundAuction.currentBidder = newBidder;
+    foundAuction.save();
+
+    res.json({
+      updatedAuction: foundAuction,
+      newBidder: newBidder
+    });
+  })
 });
 
 

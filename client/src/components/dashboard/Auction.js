@@ -18,11 +18,13 @@ class Auction extends Component {
       buyItNow: 0.00,
       productImage: '',
       // Todo: add auctionEndingDate field
-    }  
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props.match.params);
+    // console.log(this.props.match.params);
     const { auctionID } = this.props.match.params;
     axios
       .get(`/api/auctions/${ auctionID }`)
@@ -34,12 +36,31 @@ class Auction extends Component {
           title: auction.title,
           description: auction.description,
           currentBid: auction.currentBid,
+          currentBidder: auction.currentBidder,
           hasBuyItNow: auction.hasBuyItNow,
           buyItNow: auction.buyItNow,
           productImage: auction.productImage
         });
       });
       M.AutoInit();
+  }
+
+
+  /* EVENT HANDLERS */
+  handleChange(event) {
+    this.setState({ [event.target.id] : event.target.value })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { auctionID } = this.props.match.params;
+    const newBidData = { 
+      newBidder: this.props.auth.user.id, 
+      newBid: this.state.currentBid 
+    };
+    axios
+      .put(`/api/auctions/${ auctionID }`, newBidData) 
+      .then(res => console.log(res))
   }
 
 
@@ -59,12 +80,18 @@ class Auction extends Component {
             <h5><b>Current bid:</b> <i className='material-icons'>attach_money</i>{this.state.currentBid}</h5>
             
             {/* Todo: write post route for a bid */}
-            <form noValidate>
-              <div class="input-field col m7">
-                <i class="material-icons prefix">attach_money</i>
-                <input id="email" type="email" class="validate"></input>
-                <label for="email">Bid amount</label>
-                <span class="helper-text" data-error="wrong" data-success="right">Enter at least ${this.state.currentBid + 1} or more to bid</span>
+            <form noValidate onSubmit={this.handleSubmit}>
+              <div className="input-field col m7">
+                <i className="material-icons prefix">attach_money</i>
+                <input 
+                  onChange={this.handleChange}
+                  id="bid" 
+                  type="number" 
+                  placeholder="0.00" 
+                  className="validate"
+                />
+                <label htmlFor="bid">Bid amount</label>
+                <span className="helper-text" data-error="wrong" data-success="right">Enter at least ${this.state.currentBid + 1} or more to bid</span>
               </div>
               {/* submit button */}
               <div className='col m2' style={{ paddingLeft: '11.25px'}}>

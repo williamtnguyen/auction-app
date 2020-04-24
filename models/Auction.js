@@ -27,6 +27,9 @@ const AuctionSchema = new Schema ({
     default: 0.00,
     required: true
   },
+  currentBidder: {
+    type: Schema.Types.ObjectId,
+  },
   hasBuyItNow: {
     type: Boolean,
     default: false

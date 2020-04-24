@@ -36,7 +36,7 @@ class UtilityNavbar extends Component {
               </Link>
               <div className='nav-wrapper container'>
                 <ul id='nav-mobile' className='left hide-on-med-and-down'>
-                  <li><Link to='/home'className='black-text'>home</Link></li>
+                  <li><Link to='/auctions'className='black-text'>home</Link></li>
                   <li>
                     <Link to='' className='dropdown-trigger black-text' data-target='dropdown1'>
                       shop by category
