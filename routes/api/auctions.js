@@ -109,7 +109,7 @@ router.post('/', upload.single('productImage'), (req, res) => {
   // Find the respective author and add 'newAuction' to their 'auctions' array
   User.findById(authorID, (err, foundUser) => {
     if(err) {
-      return console.log('Could not find OP for auction: ' + err);
+      return console.log(`Could not find OP for auction: ${err}`);
     }
     foundUser.auctions.push(newAuction);
     foundUser.save();
@@ -140,7 +140,7 @@ router.put('/:auctionID', (req, res) => {
 
   Auction.findById(req.params.auctionID, (err, foundAuction) => {
     if(err) {
-      return console.log(`This is a really bad error: ${err}`)
+      return console.log(`For some reason, can't find the Auction in the DB: ${err}`)
     }
     // Server-side validation
     if(foundAuction.currentBid + 1 > newBid) {
@@ -149,14 +149,40 @@ router.put('/:auctionID', (req, res) => {
     }
     
     foundAuction.currentBid = newBid;
-    foundAuction.currentBidder = newBidder;
     foundAuction.save();
+
+    if(foundAuction.currentBidder !== newBidder) {
+      // Add 'foundAuction' to bids array of newBidder
+      User.findById(newBidder, (err, foundUser) => {
+        if(err) {
+          return console.log(`For some reason, can't find User in DB: ${err}`);
+        }
+        foundUser.bids.push(foundAuction);
+        foundUser.save();
+      });
+
+      // If there is an 'oldBidder', remove 'foundAuction' from their bids array 
+      if(foundAuction.currentBidder !== 'dummyUser') {
+        User.findById(foundAuction.currentBidder, (err, foundUser) => {
+          if(err) {
+            return console.log(`For some reason, can't find User in DB: ${err}`);
+          }
+          const bidIndex = foundUser.bids.indexOf(foundAuction._id)
+          if(bidIndex > -1) { 
+            foundUser.bids.splice(bidIndex, 1); 
+            foundUser.save();
+          }
+        });
+      }
+      
+      foundAuction.currentBidder = newBidder;
+    }
 
     res.json({
       updatedAuction: foundAuction,
       newBidder: newBidder
     });
-  })
+  });
 });
 
 

@@ -47,7 +47,6 @@ class Auction extends Component {
           productImage: auction.productImage
         });
       });
-      
       // jQuery and JS for materialize.css
       M.AutoInit();
   }
@@ -55,11 +54,7 @@ class Auction extends Component {
   // Depreacted lifecycle, revise when all functionality is done
   componentWillReceiveProps(nextProps) {
     if(nextProps.auction.bidPlaced) {
-      // below code causes a 400 response because it creates an infinite loop
-      // const { auctionID } = this.props.match.params;
-      // this.props.history.push(`/auctions/${ auctionID }`); 
-
-      window.location.reload(); // react/redux driven redirect
+      window.location.reload(); // react/redux driven refresh (only refresh on successful PUT)
     }
     if(nextProps.errors) {
       this.setState({
