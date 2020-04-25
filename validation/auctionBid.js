@@ -13,7 +13,7 @@ function validateAuctionBid(data) {
   // Validation
   if(Validator.isEmpty(data.newBid)) {
     errors.newBid = 'Bid field is required';
-  } else if(Validator.isNumeric(data.newBid)) {
+  } else if(!Validator.isNumeric(data.newBid)) {
     errors.newBid = 'Bid requires a numeric value';
   }
 

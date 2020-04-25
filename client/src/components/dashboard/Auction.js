@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { placeBid } from '../../actions/auctionActions';
+import classnames from 'classnames';
 import axios from 'axios';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -14,10 +16,13 @@ class Auction extends Component {
       title: '',
       description: '',
       currentBid: 0.00,
+      currentBidder: '',
       hasBuyItNow: false,
       buyItNow: 0.00,
       productImage: '',
-      // Todo: add auctionEndingDate field
+      newBid: 0.00, // newBid needs its own state
+      errors: {}
+      // TODO: add auctionEndingDate field
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,29 +47,47 @@ class Auction extends Component {
           productImage: auction.productImage
         });
       });
+      
+      // jQuery and JS for materialize.css
       M.AutoInit();
+  }
+
+  // Depreacted lifecycle, revise when all functionality is done
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.auction.bidPlaced) {
+      // below code causes a 400 response because it creates an infinite loop
+      // const { auctionID } = this.props.match.params;
+      // this.props.history.push(`/auctions/${ auctionID }`); 
+
+      window.location.reload(); // react/redux driven redirect
+    }
+    if(nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
 
 
   /* EVENT HANDLERS */
   handleChange(event) {
-    this.setState({ [event.target.id] : event.target.value })
+    this.setState({ [event.target.id]: event.target.value })
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(); 
     const { auctionID } = this.props.match.params;
     const newBidData = { 
       newBidder: this.props.auth.user.id, 
-      newBid: this.state.currentBid 
+      newBid: this.state.newBid 
     };
-    axios
-      .put(`/api/auctions/${ auctionID }`, newBidData) 
-      .then(res => console.log(res))
+    // todo: use the redux action
+    this.props.placeBid(auctionID, newBidData);
   }
 
 
   render() {
+    const errors = this.state.errors;
     return (
       <div className='container'>
         <Link to='/auctions' className='btn-flat waves-effect' style={{ paddingBottom: '5rem' }}>
@@ -85,13 +108,16 @@ class Auction extends Component {
                 <i className="material-icons prefix">attach_money</i>
                 <input 
                   onChange={this.handleChange}
-                  id="bid" 
+                  id="newBid" 
                   type="number" 
                   placeholder="0.00" 
-                  className="validate"
+                  className={classnames('', {
+                    invalid: errors.newBid
+                  })}
                 />
                 <label htmlFor="bid">Bid amount</label>
-                <span className="helper-text" data-error="wrong" data-success="right">Enter at least ${this.state.currentBid + 1} or more to bid</span>
+                <span className="helper-text">Enter at least ${this.state.currentBid + 1} or more to bid</span>
+                <span className="red-text">{errors.newBid}</span>
               </div>
               {/* submit button */}
               <div className='col m2' style={{ paddingLeft: '11.25px'}}>
@@ -118,14 +144,18 @@ class Auction extends Component {
 }
 
 Auction.propTypes = {
+  placeBid: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  auction: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  auction: state.auction,
+  errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { }
+  { placeBid }
 ) (Auction);

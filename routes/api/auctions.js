@@ -138,7 +138,7 @@ router.put('/:auctionID', (req, res) => {
   const newBidder = req.body.newBidder,
         newBid    = req.body.newBid;
 
-  Auction.findById(req.params.id, (err, foundAuction) => {
+  Auction.findById(req.params.auctionID, (err, foundAuction) => {
     if(err) {
       return console.log(`This is a really bad error: ${err}`)
     }
@@ -147,6 +147,7 @@ router.put('/:auctionID', (req, res) => {
       let newBidError = { newBid: `You must bid ${foundAuction.currentBid + 1} or more`}
       return res.status(400).json(newBidError);
     }
+    
     foundAuction.currentBid = newBid;
     foundAuction.currentBidder = newBidder;
     foundAuction.save();

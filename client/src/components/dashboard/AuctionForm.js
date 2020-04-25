@@ -205,13 +205,13 @@ AuctionForm.propTypes = {
   postAuction: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
-  auction: PropTypes.bool.isRequired
+  auction: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors,
-  auction: state.auction
+  auction: state.auction,
+  errors: state.errors
 });
 
 export default connect(
