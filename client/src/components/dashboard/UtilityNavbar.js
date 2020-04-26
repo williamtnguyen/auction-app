@@ -73,6 +73,7 @@ class UtilityNavbar extends Component {
             <li><Link to='' className='subheader'>eCommerce</Link></li>
             <li><div className='divider'></div></li>
 
+            <li><Link to='/user/my-auctions'><i className='material-icons'>person_outline</i>My Auctions</Link></li>
             <li><Link to='item2'><i className='material-icons'>local_atm</i>Bids/Offers</Link></li>
             <li><Link to='item3'><i className='material-icons'>shopping_cart</i>Won Bids/Purchased</Link></li>
             <li><Link to='item1'><i className='material-icons'>mail_outline</i>Messages</Link></li>

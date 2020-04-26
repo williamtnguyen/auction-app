@@ -94,10 +94,11 @@ class Auction extends Component {
           </div>
           <div className='col m7'>
             <h3><b>{this.state.title}</b></h3>
+            <p><b><i className='material-icons'>person_outline</i> Seller: </b> {this.state.author.name}</p>
             <blockquote>{this.state.description}</blockquote>
             <h5><b>Current bid:</b> <i className='material-icons'>attach_money</i>{this.state.currentBid}</h5>
             
-            {/* Todo: write post route for a bid */}
+            {/* Form: PUT route for a bid */}
             <form noValidate onSubmit={this.handleSubmit}>
               <div className="input-field col m7">
                 <i className="material-icons prefix">attach_money</i>
@@ -129,8 +130,8 @@ class Auction extends Component {
                   Place Bid
                 </button>
               </div>
-
             </form>
+            
           </div>
         </div>
       </div>

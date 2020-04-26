@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
-// import mockPic from '../../images/mario_king.jpg';
 
 // Home component aggregates UtilityNavbar component
-import UtilityNavbar from './UtilityNavbar'
+import UtilityNavbar from '../dashboard/UtilityNavbar'
 
 
 class Home extends Component {
@@ -39,7 +38,7 @@ class Home extends Component {
         {/* Utility navbar for users only */}
         <UtilityNavbar />
         
-        {/* Home-feed */}
+        {/* Home-feed of auction thumbnails */}
         <section className='row container'>
 
           {this.state.auctions.map(auction => (
@@ -47,7 +46,7 @@ class Home extends Component {
               <div className='col s3'>
                 <div className='card small'>
                   <div className='card-image'>
-                    <img src={`/${auction.productImage}`} className='responsive-img'alt=''></img>
+                    <img src={`/${auction.productImage}`} className='responsive-img' alt=''></img>
                   </div>
                   <div className='card-content'>
                     <span className='card-title' style={{fontSize:'1.1rem', fontWeight:'440'}}>

@@ -7,6 +7,7 @@ const express = require('express'),
 
 // Load User model
 const User = require('../../models/User');
+const Auction = require('../../models/Auction');
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register');
@@ -118,6 +119,28 @@ router.post('/login', (req, res) => {
         });
     });
 });
+
+
+/**
+ * MY-AUCTIONS ENDPOINT
+ * @route GET api/users/:userID/my-auctions
+ * @desc res --> all auctions a user has posted
+ * @access Public
+ */
+router.get('/:userID/my-auctions', (req, res) => {
+  User.findById(req.params.userID)
+    .then(user => {
+      const userAuctionIDs = user.auctions;
+      // Find all auctions from the currentUsers' array of auction id's and respond w/ all the documents as JSON
+      Auction.find({
+        _id: { $in: userAuctionIDs }
+      })
+      .then(userAuctions => {
+        res.json(userAuctions);
+      })
+      .catch(err => {})
+    })
+})
 
 // Modularity of API endpoints
 module.exports = router;

@@ -126,6 +126,7 @@ router.post('/', upload.single('productImage'), (req, res) => {
 /**
  * AUCTION 'UPDATE' ENDPOINT
  * @route PUT /api/auctions/:auctionID
+ * @desc updates the current bid on an auction
  * @access Public
  */
 router.put('/:auctionID', (req, res) => {
@@ -151,6 +152,7 @@ router.put('/:auctionID', (req, res) => {
     foundAuction.currentBid = newBid;
     foundAuction.save();
 
+    // If the newBidder is not the same as the previous
     if(foundAuction.currentBidder !== newBidder) {
       // Add 'foundAuction' to bids array of newBidder
       User.findById(newBidder, (err, foundUser) => {
@@ -174,7 +176,7 @@ router.put('/:auctionID', (req, res) => {
           }
         });
       }
-      
+      // Only need to update currentBidder if it is somebody new
       foundAuction.currentBidder = newBidder;
     }
 
