@@ -41,7 +41,7 @@ class Home extends Component {
         {/* Home-feed of auction thumbnails */}
         <section className='row container'>
 
-          {this.state.auctions.map(auction => (
+          {this.state.auctions.slice(0).reverse().map(auction => (
             <Link to={`/auctions/${auction._id}`} className='black-text' key={auction._id}>
               <div className='col s3'>
                 <div className='card small'>

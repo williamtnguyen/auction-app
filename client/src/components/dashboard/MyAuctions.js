@@ -43,10 +43,11 @@ class MyAuctions extends Component {
         {/* UL of collapsible posted auctions */}
         <section className='row container'>
           
-          <h4><b>My Posted Auctions</b></h4>
-          <div className='col m10 offset-m1'>
+          <h4 className='center'><b>My Posted Auctions</b></h4>
+          <div className='divider'></div>
+          <div style={{ paddingTop: '1rem' }} className='col m8 offset-m2'>
             <ul className='collapsible popout'>
-              {this.state.auctions.map(auction => (
+              {this.state.auctions.slice(0).reverse().map(auction => (
                 <li key={auction._id}>
                   <div className='collapsible-header'>
                     <h6><b>{auction.title}:</b> ${auction.currentBid}</h6>

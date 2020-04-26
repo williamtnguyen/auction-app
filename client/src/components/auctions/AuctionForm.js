@@ -171,7 +171,7 @@ class AuctionForm extends Component {
                     onChange={this.handleFileUpload} 
                     id="productImage"
                     type="file" 
-                    multiple />
+                  />
                 </div>
                 <div className="file-path-wrapper">
                   <input disabled className="file-path validate" type="text" placeholder="Upload one or more images" />
