@@ -17,6 +17,9 @@ class AuctionForm extends Component {
       hasBuyItNow: false,
       buyItNow: 0.00,
       productImage: '',
+      endingDate: '',
+      endingTime: '',
+      
       errors: {}
     };
     // binding 'this' context for event handlers
@@ -24,12 +27,31 @@ class AuctionForm extends Component {
     this.handleBuyItNowToggle = this.handleBuyItNowToggle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
+    this.handleDatePicker = this.handleDatePicker.bind(this);
+    this.handleTimePicker = this.handleTimePicker.bind(this);
+
+    // Refs for Materialize Datepicker and Timepicker 
+    this.endingDate = React.createRef();
+    this.endingTime = React.createRef();
   }
 
   componentDidMount() {
     // Character counter for description
     var inputNeedsCount = document.querySelectorAll('#description');
     M.CharacterCounter.init(inputNeedsCount);
+    
+    // Date picker
+    var elems = document.querySelectorAll('.datepicker');
+    M.Datepicker.init(elems, {
+      format: 'mmmm dd, yyyy',
+      onClose: this.handleDatePicker
+    });
+
+    // Time picker
+    elems = document.querySelectorAll('.timepicker');
+    M.Timepicker.init(elems, {
+      onCloseEnd: this.handleTimePicker
+    })
   }
 
   // Deprecated vvv revise this with new lifecycle function
@@ -45,28 +67,34 @@ class AuctionForm extends Component {
     }
   }
 
-  /* ~~~~ EVENT HANDLERS ~~~~ */
+  /* ~~~~~ EVENT HANDLERS ~~~~~ */
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value })
   }
   handleBuyItNowToggle() {
+    // Good practice to use 'prevState' when state update depends on prevState (think about async changes to state)
     this.setState(prevState => ({
       hasBuyItNow: !prevState.hasBuyItNow
     }));
   }
   handleFileUpload(event) {
+    console.log(event.target.files)
     this.setState({ [event.target.id]: event.target.files[0] })
   }
+  handleDatePicker() {
+    // Sets state using the ref
+    this.setState({ endingDate: this.endingDate.current.value })
+  }
+  handleTimePicker() {
+    // Sets state using the ref
+    this.setState({ endingTime: this.endingTime.current.value })
+  }
 
-  // It is bad practice to update state like this if it depends on the previous state (aynchronous state updates may fuck it up)
-  // handleBuyItNowToggle() {
-  //   this.setState({ hasBuyItNow: !this.state.hasBuyItNow })
-  // }
-
+  // Handles form submission
   handleSubmit(event) {
     // preventDefault stops the page from reloading when submit button is clicked
     event.preventDefault();
-    // Todo: create auction object (will be sent to backend via Redux)
+    // Create auction object (will be sent to backend via Redux)
     const auctionData = {
       authorID: this.props.auth.user.id, // passing this to use on the server side
       authorName: this.props.auth.user.name,
@@ -75,7 +103,10 @@ class AuctionForm extends Component {
       startingBid: this.state.startingBid, 
       hasBuyItNow: this.state.hasBuyItNow,
       buyItNow: this.state.buyItNow,
-      productImage: this.state.productImage
+      productImage: this.state.productImage,
+      // These two strings will be concatenated into one string on server-side
+      endingDate: this.state.endingDate,
+      endingTime: this.state.endingTime
     };
     // console.log(auctionData);
     this.props.postAuction(auctionData);
@@ -159,7 +190,40 @@ class AuctionForm extends Component {
                   </label>
                 </div>
               </div>
-              {/* Todo: buyItNow field that shows only if the toggle is on */}
+
+              {/* TODO: buyItNow field that shows only if the toggle is on */}
+
+              {/* CALENDAR Datepicker: date input */}
+              <div className='input-field col s9'>
+                <i className='material-icons prefix'>date_range</i>
+                <input 
+                  ref={this.endingDate}
+                  value={this.state.endingDate}
+                  error={errors.endingDate}
+                  id='endingDate'
+                  type='text'
+                  className={classnames('datepicker', {
+                    invalid: errors.endingDate
+                  })}
+                />
+                <label htmlFor='endingDate'>Ending Date</label>
+                {/* <span className='red-text'>{errors.endingDate}</span> */}
+              </div>
+              {/* CLOCK Timepicker: time input */}
+              <div className='input-field col s9'>
+                <i className='material-icons prefix'>access_time</i>
+                <input 
+                  ref={this.endingTime}
+                  value={this.state.endingTime}
+                  error={errors.endingTime}
+                  id='endingTime'
+                  type='text'
+                  className={classnames('timepicker', {
+                    invalid: errors.endingTime
+                  })}
+                />
+                <label htmlFor='endingTime'>Ending Time</label>
+              </div>
 
               {/* File upload */}
               {/* TODO: connect this input with the component state and handleSubmit portion */}

@@ -91,6 +91,12 @@ router.post('/', upload.single('productImage'), (req, res) => {
 
   // console.log(req.file);
   // console.log(req.body);
+
+  // Creating one date object comprised from endingDate and endingTime
+  let endingDateString = req.body.endingDate.concat(' ');
+  endingDateString = endingDateString.concat(req.body.endingTime);
+  const endingDate = new Date(endingDateString);
+  console.log(endingDate);
   
   // Otherwise, valid inputs. Create the auction post
   const newAuction = new Auction({
@@ -100,7 +106,8 @@ router.post('/', upload.single('productImage'), (req, res) => {
     currentBid: req.body.startingBid,
     hasBuyItNow: req.body.hasBuyItNow,
     buyItNow: req.body.buyItNow,
-    productImage: req.file.path // req.file object comes from multer's 'upload.single()' middleware
+    productImage: req.file.path, // req.file object comes from multer's 'upload.single()' middleware
+    endingDate: endingDate
   });
   newAuction.save(err => {
     return console.log(err);

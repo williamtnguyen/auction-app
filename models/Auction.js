@@ -42,9 +42,14 @@ const AuctionSchema = new Schema ({
     type: String,
     required: true
   },
-  dateCreated: {
+  creationDate: {
     type: Date,
     default: Date.now
+  },
+  // Materialize.css string inputs --> JS date object --> BSON native date object in Mongo
+  endingDate: {
+    type: Date,
+    required: true
   }
 });
 

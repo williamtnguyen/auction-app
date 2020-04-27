@@ -11,6 +11,8 @@ function validateAuctionInput(data) {
   data.title = !isEmpty(data.title) ? data.title : "";
   data.description = !isEmpty(data.description) ? data.description : "";
   data.startingBid = !isEmpty(data.startingBid) ? data.startingBid : "";
+  data.endingDate = !isEmpty(data.endingDate) ? data.endingDate : "";
+  data.endingTime = !isEmpty(data.endingTime) ? data.endingTime : "";
 
   // If this field is true, then we need to validate the buyItNow entry as well
   const hasBuyItNow = data.hasBuyItNow == 'true';
@@ -33,9 +35,21 @@ function validateAuctionInput(data) {
 
   // Starting bid validation
   if(Validator.isEmpty(data.startingBid)) {
-    errors.startingBid = 'Starting-bid field is required'
+    errors.startingBid = 'Starting-bid field is required';
   } else if(!Validator.isNumeric(data.startingBid)) {
-    errors.startingBid = 'Price requires a numeric value'
+    errors.startingBid = 'Price requires a numeric value';
+  }
+
+  // Ending date validation
+  if(Validator.isEmpty(data.endingDate)) {
+    errors.endingDate = 'Ending date field is required';
+  } else if(Validator.isAfter(data.endingDate, Date.now().toString())) {
+    errors.endingDate = 'Ending date must be after the current date';
+  }
+
+  // Ending time validation
+  if(Validator.isEmpty(data.endingTime)) {
+    errors.endingTime = 'Ending time field is required';
   }
 
   return {
