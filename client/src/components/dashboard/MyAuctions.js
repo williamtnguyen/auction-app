@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -73,6 +73,11 @@ class MyAuctions extends Component {
                         {auction.currentBidder === 'dummyUser' ? 'Nobody' : auction.currentBidder}
                       </h6>
                       <h6><b>Ends on: </b>{this.getDateString(auction)}</h6>
+                      <div className='btn btn-small waves-effect waves-light'>
+                        <Link to={`/auctions/${auction._id}`} className='btn-flat waves-effect' style={{}}>
+                          <i className='material-icons right'>arrow_forward</i>View auction
+                        </Link>
+                      </div>
                     </section>
                     <h6><i>Description:</i></h6>
                     <blockquote>{auction.description}</blockquote>

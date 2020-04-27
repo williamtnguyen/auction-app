@@ -43,9 +43,7 @@ function validateAuctionInput(data) {
   // Ending date validation
   if(Validator.isEmpty(data.endingDate)) {
     errors.endingDate = 'Ending date field is required';
-  } else if(Validator.isAfter(data.endingDate, Date.now().toString())) {
-    errors.endingDate = 'Ending date must be after the current date';
-  }
+  } 
 
   // Ending time validation
   if(Validator.isEmpty(data.endingTime)) {
