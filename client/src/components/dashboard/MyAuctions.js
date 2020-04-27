@@ -28,9 +28,21 @@ class MyAuctions extends Component {
         console.log(myAuctions);
         this.setState({ auctions: myAuctions });
       })
-
       // jQuery and JS for materialize.css
       M.AutoInit();
+  }
+
+  // Handles converting stored date into readable format
+  getDateString(auction) {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December'];
+    const dateObject = new Date(auction.endingDate);
+
+    const month = monthNames[dateObject.getUTCMonth()];
+    const day = dateObject.getUTCDate();
+    const year = dateObject.getUTCFullYear();
+    const time = dateObject.toLocaleTimeString();
+    return (month + ' ' + day + ', ' + year + ' at ' + time);
   }
 
 
@@ -47,6 +59,7 @@ class MyAuctions extends Component {
           <div className='divider'></div>
           <div style={{ paddingTop: '1rem' }} className='col m8 offset-m2'>
             <ul className='collapsible popout'>
+
               {this.state.auctions.slice(0).reverse().map(auction => (
                 <li key={auction._id}>
                   <div className='collapsible-header'>
@@ -54,11 +67,19 @@ class MyAuctions extends Component {
                   </div>
                   <div className='collapsible-body'>
                     <img src={`/${auction.productImage}`} className='responsive-img' alt=''></img>
+                    <section className='row'>
+                      <h6>
+                        <b>Current Bidder: </b> 
+                        {auction.currentBidder === 'dummyUser' ? 'Nobody' : auction.currentBidder}
+                      </h6>
+                      <h6><b>Ends on: </b>{this.getDateString(auction)}</h6>
+                    </section>
                     <h6><i>Description:</i></h6>
                     <blockquote>{auction.description}</blockquote>
                   </div>
                 </li>
               ))}
+
             </ul>
           </div>
       

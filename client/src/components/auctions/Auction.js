@@ -21,8 +21,8 @@ class Auction extends Component {
       buyItNow: 0.00,
       productImage: '',
       newBid: 0.00, // newBid needs its own state
+      endingDate: '',
       errors: {}
-      // TODO: add auctionEndingDate field
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,7 +44,8 @@ class Auction extends Component {
           currentBidder: auction.currentBidder,
           hasBuyItNow: auction.hasBuyItNow,
           buyItNow: auction.buyItNow,
-          productImage: auction.productImage
+          productImage: auction.productImage,
+          endingDate: auction.endingDate
         });
       });
       // jQuery and JS for materialize.css
