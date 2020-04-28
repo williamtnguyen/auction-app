@@ -74,7 +74,8 @@ class Auction extends Component {
     event.preventDefault(); 
     const { auctionID } = this.props.match.params;
     const newBidData = { 
-      newBidder: this.props.auth.user.id, 
+      newBidderID: this.props.auth.user.id, 
+      newBidderName: this.props.auth.user.name,
       newBid: this.state.newBid 
     };
     // todo: use the redux action

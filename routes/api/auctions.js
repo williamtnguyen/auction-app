@@ -143,13 +143,15 @@ router.put('/:auctionID', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const newBidder = req.body.newBidder,
-        newBid    = req.body.newBid;
+  const newBidderID     = req.body.newBidderID,
+        newBidderName   = req.body.newBidderName,
+        newBid          = req.body.newBid;
 
   Auction.findById(req.params.auctionID, (err, foundAuction) => {
     if(err) {
       return console.log(`For some reason, can't find the Auction in the DB: ${err}`)
     }
+
     // Server-side validation
     if(foundAuction.currentBid + 1 > newBid) {
       let newBidError = { newBid: `You must bid ${foundAuction.currentBid + 1} or more`}
@@ -160,9 +162,9 @@ router.put('/:auctionID', (req, res) => {
     foundAuction.save();
 
     // If the newBidder is not the same as the previous
-    if(foundAuction.currentBidder !== newBidder) {
+    if(foundAuction.currentBidder.id !== newBidderID) {
       // Add 'foundAuction' to bids array of newBidder
-      User.findById(newBidder, (err, foundUser) => {
+      User.findById(newBidderID, (err, foundUser) => {
         if(err) {
           return console.log(`For some reason, can't find User in DB: ${err}`);
         }
@@ -171,8 +173,8 @@ router.put('/:auctionID', (req, res) => {
       });
 
       // If there is an 'oldBidder', remove 'foundAuction' from their bids array 
-      if(foundAuction.currentBidder !== 'dummyUser') {
-        User.findById(foundAuction.currentBidder, (err, foundUser) => {
+      if(foundAuction.currentBidder.id !== 'dummyID') {
+        User.findById(foundAuction.currentBidder.id, (err, foundUser) => {
           if(err) {
             return console.log(`For some reason, can't find User in DB: ${err}`);
           }
@@ -184,12 +186,13 @@ router.put('/:auctionID', (req, res) => {
         });
       }
       // Only need to update currentBidder if it is somebody new
-      foundAuction.currentBidder = newBidder;
+      foundAuction.currentBidder.id   = newBidderID;
+      foundAuction.currentBidder.name = newBidderName;
     }
 
     res.json({
       updatedAuction: foundAuction,
-      newBidder: newBidder
+      newBidder: { id: newBidderID, name: newBidderName }
     });
   });
 });

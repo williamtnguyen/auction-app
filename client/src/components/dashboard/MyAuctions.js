@@ -70,7 +70,7 @@ class MyAuctions extends Component {
                     <section className='row'>
                       <h6>
                         <b>Current Bidder: </b> 
-                        {auction.currentBidder === 'dummyUser' ? 'Nobody' : auction.currentBidder}
+                        {auction.currentBidder.name === 'dummyUser' ? 'Nobody' : auction.currentBidder.name}
                       </h6>
                       <h6><b>Ends on: </b>{this.getDateString(auction)}</h6>
                       <div className='btn btn-small waves-effect waves-light'>

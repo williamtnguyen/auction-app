@@ -32,6 +32,6 @@ Likewise, the React application can be started individually as well:
 $ npm run client
 ```
 
-## Project Architecture
+<!-- ## Project Architecture
 User stories and business logic can be inferred from this UI Transition Diagram:
-<img src='https://i.imgur.com/HjcudXg.jpg' title='UIDiagram' width='' alt=''/>
+<img src='https://i.imgur.com/HjcudXg.jpg' title='UIDiagram' width='' alt=''/> -->

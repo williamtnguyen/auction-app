@@ -28,8 +28,14 @@ const AuctionSchema = new Schema ({
     required: true
   },
   currentBidder: {
-    type: String,
-    default: 'dummyUser',
+    id: {
+      type: String,
+      default: 'dummyID',
+    },
+    name: {
+      type: String,
+      default: 'dummyUser'
+    }
   },
   hasBuyItNow: {
     type: Boolean,

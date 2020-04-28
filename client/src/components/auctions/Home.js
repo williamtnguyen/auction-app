@@ -43,7 +43,7 @@ class Home extends Component {
 
           {this.state.auctions.slice(0).reverse().map(auction => (
             <Link to={`/auctions/${auction._id}`} className='black-text' key={auction._id}>
-              <div className='col s3'>
+              <div className='col m3'>
                 <div className='card small'>
                   <div className='card-image'>
                     <img src={`/${auction.productImage}`} className='responsive-img' alt=''></img>
