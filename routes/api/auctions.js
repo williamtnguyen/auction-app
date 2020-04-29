@@ -165,7 +165,7 @@ router.put('/:auctionID', (req, res) => {
 
     // Server-side validation
     if(foundAuction.currentBid + 1 > newBid) {
-      let newBidError = { newBid: `You must bid ${foundAuction.currentBid + 1} or more`}
+      let newBidError = { newBid: `Too low!`}
       return res.status(400).json(newBidError);
     }
     

@@ -138,9 +138,33 @@ router.get('/:userID/my-auctions', (req, res) => {
       .then(userAuctions => {
         res.json(userAuctions);
       })
-      .catch(err => {})
-    })
-})
+      .catch(err => {});
+    });
+});
+
+
+/**
+ * MY-BIDS ENDPOINT
+ * @route GET api/users/:userID/my-bids
+ * @desc res --> all CURRENT bids
+ * @access Public
+ */
+router.get('/:userID/my-bids', (req, res) => {
+  User.findById(req.params.userID)
+    .then(user => {
+      const userBidIDs = user.bids
+      // Find all bids from the currentUsers' array of auction id's that they've bid on
+      Auction.find({
+        _id: { $in: userBidIDs },
+        // endingDate: { $lte: new Date() }
+      })
+      .then(userBids => {
+        res.json(userBids);
+      })
+      .catch(err => {});
+    });
+});
+
 
 // Modularity of API endpoints
 module.exports = router;

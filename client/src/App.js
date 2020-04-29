@@ -21,6 +21,7 @@ import Home from './components/auctions/Home';
 import AuctionForm from './components/auctions/AuctionForm';
 import Auction from './components/auctions/Auction';
 import MyAuctions from './components/dashboard/MyAuctions';
+import MyBids from './components/dashboard/MyBids';
 import Footer from './components/layout/Footer';
 
 
@@ -63,6 +64,7 @@ class App extends Component {
               <PrivateRoute exact path='/auctions/new' component={AuctionForm} />
               <PrivateRoute exact path='/auctions/:auctionID' component={Auction} />
               <PrivateRoute exact path='/user/my-auctions' component={MyAuctions} />
+              <PrivateRoute exact path='/user/my-bids' component={MyBids} />
             </Switch>
             <Footer />
           </div>

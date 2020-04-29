@@ -115,7 +115,7 @@ class Auction extends Component {
                 />
                 <label htmlFor="bid">Bid amount</label>
                 <span className="helper-text">Enter at least ${this.state.currentBid + 1} or more to bid</span>
-                <span className="red-text">{errors.newBid}</span>
+                <span className="red-text" style={{paddingLeft: '3rem'}}>{errors.newBid}</span>
               </div>
               {/* submit button */}
               <div className='col m2' style={{ paddingLeft: '11.25px'}}>
