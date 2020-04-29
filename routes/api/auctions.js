@@ -44,15 +44,25 @@ const upload = multer({
  * @access Public
  */
 router.get('/', (req, res) => {
-  /* TODO: conditional statements depending on category filter */
-
-  // Get all auctions from DB and send them off as JSON 
-  Auction.find({}, (err, allAuctions) => {
-    if(err) { 
-      return console.log(`No auctions found: ${err}`); 
-    }
-    res.json(allAuctions);
-  });
+  if(Object.keys(req.query).length === 0) {
+    // Get all auctions from DB and send them off as JSON 
+    Auction.find({}, (err, allAuctions) => {
+      if(err) { 
+        return console.log(`No auctions found: ${err}`); 
+      }
+      res.json(allAuctions);
+    });
+  } 
+  else {
+    // console.log(req.query.search);
+    // Get all auctions that match the query and return them in order of relevance
+    Auction
+      .find({ $text: { $search: req.query.search }})
+      .exec((err, matchedAuctions) => { 
+        if(err) { return console.log('need to handle no search hit here') }
+        res.json(matchedAuctions);
+      });
+  }
 });
 
 

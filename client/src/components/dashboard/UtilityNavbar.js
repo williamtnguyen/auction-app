@@ -7,13 +7,36 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 
 import mockPic from '../../images/mario_king.jpg';
 
-
+/* This component is a navbar with utility functions only avail to auth'd users */
 class UtilityNavbar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      query: ''
+    };
+    // Binding 'this' context for event handlers
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
   componentDidMount() {
-    // let sidenav = document.querySelector('#slide-out');
-    // M.Sidenav.init(sidenav, {});
     M.AutoInit();
+  }
+
+  /* Event Handlers */
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    // URLSearchParams is available in all modern browsers
+    const queryString = new URLSearchParams({ search: this.state.query }).toString();
+    // Redirects to 'home' route with a query parameter
+    this.props.history.push({
+      pathname: '/auctions',
+      search: queryString
+    })
   }
 
   onLogoutClick = (event) => {
@@ -43,8 +66,20 @@ class UtilityNavbar extends Component {
                       <i className='material-icons right'>arrow_drop_down</i>
                     </Link>
                   </li>
-                  <li>
-                  {/* !! Search bar here !! */}
+                  {/* Search Bar for queries */}
+                  <li style={{ width: '26rem', paddingLeft: '1rem' }}>
+                    <form noValidate onSubmit={this.handleSubmit} >
+                      <div className='input-field' className=''>
+                        <input 
+                          onChange={this.handleChange}
+                          value={this.state.query}
+                          id='query'
+                          type='text' 
+                          placeholder='🔎 Search for an item...'
+                          style={{paddingLeft: '1rem', background: '#ffffff', borderRadius: '25px'}}
+                        />
+                      </div>
+                    </form>
                   </li>
                 </ul> 
                 <ul id='nav-mobile' className='right hide-on-med-and-down'>

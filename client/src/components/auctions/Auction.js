@@ -78,7 +78,7 @@ class Auction extends Component {
       newBidderName: this.props.auth.user.name,
       newBid: this.state.newBid 
     };
-    // todo: use the redux action
+
     this.props.placeBid(auctionID, newBidData);
   }
 

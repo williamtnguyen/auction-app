@@ -59,5 +59,8 @@ const AuctionSchema = new Schema ({
   }
 });
 
+// Text Indexing for queries via search bar
+AuctionSchema.index({ title: "text", description: "text" });
+
 const Auction = mongoose.model("auctions", AuctionSchema);
 module.exports = Auction;
