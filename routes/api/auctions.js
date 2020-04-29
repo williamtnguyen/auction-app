@@ -44,7 +44,7 @@ const upload = multer({
  * @access Public
  */
 router.get('/', (req, res) => {
-  if(Object.keys(req.query).length === 0) {
+  if(!req.query.search) {
     // Get all auctions from DB and send them off as JSON 
     Auction.find({}, (err, allAuctions) => {
       if(err) { 
@@ -56,8 +56,9 @@ router.get('/', (req, res) => {
   else {
     console.log(`Query: ${req.query.search}`);
     // Get all auctions that match the query and return them in order of relevance
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
     Auction
-      .find({ $text: { $search: req.query.search }}, { score: {$meta: 'textScore'}})
+      .find({ $text: { $search: regex }}, { score: {$meta: 'textScore'}})
       .exec((err, matchedAuctions) => { 
         if(err) { return console.log('need to handle no search hit here') }
         res.json(matchedAuctions);
@@ -206,6 +207,16 @@ router.put('/:auctionID', (req, res) => {
     });
   });
 });
+
+
+
+/**
+ * Helper method: escaping regex
+ * @desc utilizes escape regex to do fuzzy search with mongo query
+ */
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 module.exports = router;
