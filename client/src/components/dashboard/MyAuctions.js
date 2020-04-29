@@ -55,7 +55,7 @@ class MyAuctions extends Component {
         {/* UL of collapsible posted auctions */}
         <section className='row container'>
           
-          <h4 className='center'><b>My Posted Auctions</b></h4>
+          <h4 className='center' style={{ marginTop: '4rem' }}><b>My Posted Auctions</b></h4>
           <div className='divider'></div>
           <div style={{ paddingTop: '1rem' }} className='col m8 offset-m2'>
             <ul className='collapsible popout'>

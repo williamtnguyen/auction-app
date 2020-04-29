@@ -9,6 +9,11 @@ class Footer extends Component {
         style={{
           backgroundColor: 'white',
           fontFamily:'monospace',
+          bottom: 0,
+          left: 0,
+          height: '4.5rem',
+          width: '100%',
+          zIndex: '-9999'
         }}
       >
         <section className='container'>

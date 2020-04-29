@@ -53,9 +53,8 @@ class UtilityNavbar extends Component {
         <section className='row'>
           <div className='navbar-fixed'>
             <nav className='grey lighten-4'>
-              <Link to='' data-target='slide-out' className='sidenav-trigger show-on-large hoverable'>
-                  <i style={{ color: '#000'}} className='material-icons'>person</i>
-                  {user.name}
+              <Link to='' data-target='slide-out' className='sidenav-trigger show-on-large'>
+                <i style={{ color: '#000'}} className='material-icons'>person</i>
               </Link>
               <div className='nav-wrapper container'>
                 <ul id='nav-mobile' className='left hide-on-med-and-down'>

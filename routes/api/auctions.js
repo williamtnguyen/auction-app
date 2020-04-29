@@ -54,10 +54,10 @@ router.get('/', (req, res) => {
     });
   } 
   else {
-    // console.log(req.query.search);
+    console.log(`Query: ${req.query.search}`);
     // Get all auctions that match the query and return them in order of relevance
     Auction
-      .find({ $text: { $search: req.query.search }})
+      .find({ $text: { $search: req.query.search }}, { score: {$meta: 'textScore'}})
       .exec((err, matchedAuctions) => { 
         if(err) { return console.log('need to handle no search hit here') }
         res.json(matchedAuctions);
