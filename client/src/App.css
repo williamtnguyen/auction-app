@@ -41,3 +41,6 @@
 
 
 /* ~~~~ CUSTOM CSS ~~~~ */
+.sidenav-overlay {
+  background-color: transparent;
+}

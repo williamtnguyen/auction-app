@@ -6,10 +6,10 @@ import axios from 'axios';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-// MyAuctions component aggregates UtilityNavbar component
+// MyBids component aggregates UtilityNavbar component
 import UtilityNavbar from './UtilityNavbar';
 
-// Component to view posted auctions as a seller
+// Component to view current bids as a buyer
 class MyBids extends Component {
   constructor() {
     super();
@@ -20,7 +20,7 @@ class MyBids extends Component {
 
   componentDidMount() {
     const userID = this.props.auth.user.id;
-    // Making a GET request of for all posted documents from logged in user
+    // Making a GET request for all currently bidded documents from logged in user
     axios
       .get(`/api/users/${userID}/my-bids`)
       .then(res => {
@@ -69,8 +69,8 @@ class MyBids extends Component {
                     <img src={`/${auction.productImage}`} className='responsive-img' alt=''></img>
                     <section className='row'>
                       <h6>
-                        <b>Current Bidder: </b> 
-                        {auction.currentBidder.name === 'dummyUser' ? 'Nobody' : auction.currentBidder.name}
+                        <b>Seller: </b> 
+                        {auction.author.name}
                       </h6>
                       <h6><b>Ends on: </b>{this.getDateString(auction)}</h6>
                       <div className='btn btn-small waves-effect waves-light'>

@@ -56,6 +56,7 @@ class UtilityNavbar extends Component {
               <Link to='' data-target='slide-out' className='sidenav-trigger show-on-large'>
                 <i style={{ color: '#000'}} className='material-icons'>person</i>
               </Link>
+              
               <div className='nav-wrapper container'>
                 <ul id='nav-mobile' className='left hide-on-med-and-down'>
                   <li><Link to='/auctions'className='black-text'>home</Link></li>
@@ -98,7 +99,7 @@ class UtilityNavbar extends Component {
             <li>
               <div className='user-view'>
                 <div className='background grey lighten-4'></div>
-                <Link to='/profile'><img className='circle' src={mockPic} alt=''></img></Link>
+                <Link to=''><img className='circle' src={mockPic} alt=''></img></Link>
                 <Link to=''><span className='black-text name'>{user.name}</span></Link>
                 <Link to=''><span className='black-text email'>@GoodSeller</span></Link>
               </div>
@@ -109,7 +110,7 @@ class UtilityNavbar extends Component {
 
             <li><Link to='/user/my-auctions'><i className='material-icons'>person_outline</i>My Auctions</Link></li>
             <li><Link to='/user/my-bids'><i className='material-icons'>local_atm</i>My Bids</Link></li>
-            <li><Link to='item3'><i className='material-icons'>shopping_cart</i>Won Bids/Purchased</Link></li>
+            <li><Link to='/user/my-cart'><i className='material-icons'>shopping_cart</i>Won Bids/My Cart</Link></li>
             <li><Link to='item1'><i className='material-icons'>mail_outline</i>Messages</Link></li>
 
             <li><Link to='' className='subheader'>Account Settings</Link></li>

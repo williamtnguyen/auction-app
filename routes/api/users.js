@@ -152,11 +152,34 @@ router.get('/:userID/my-auctions', (req, res) => {
 router.get('/:userID/my-bids', (req, res) => {
   User.findById(req.params.userID)
     .then(user => {
-      const userBidIDs = user.bids
-      // Find all bids from the currentUsers' array of auction id's that they've bid on
+      const userBidIDs = user.bids;
+      // Find all bids from the currentUsers' array of auction id's that they've bid on and hasn't expired
       Auction.find({
         _id: { $in: userBidIDs },
-        // endingDate: { $lte: new Date() }
+        endingDate: { $gte: new Date() }
+      })
+      .then(userBids => {
+        res.json(userBids);
+      })
+      .catch(err => {});
+    });
+});
+
+
+/**
+ * 'MY-WON-AUCTIONS' ENDPOINT (more simply my-cart)
+ * @route GET api/users/:userID/my-cart
+ * @desc res --> all EXPIRED/WON bids
+ * @access Public
+ */
+router.get('/:userID/my-cart', (req, res) => {
+  User.findById(req.params.userID)
+    .then(user => {
+      const userBidIDs = user.bids;
+      // Find all bids from the currentUsers' array of auction id's they've bid on and has expired
+      Auction.find({
+        _id: { $in: userBidIDs },
+        endingDate: { $lte: new Date() }
       })
       .then(userBids => {
         res.json(userBids);
