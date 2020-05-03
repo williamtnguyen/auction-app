@@ -86,7 +86,7 @@ class UtilityNavbar extends Component {
                   <li>
                     <Link to='/auctions/new' 
                       className='btn waves-effect waves-light hoverable blue lighten-3 black-text'>
-                      Post Bidding <i className="material-icons right">add</i>
+                      Post Auction <i className="material-icons right">add</i>
                     </Link>
                   </li>
                 </ul>
@@ -110,7 +110,7 @@ class UtilityNavbar extends Component {
 
             <li><Link to='/user/my-auctions'><i className='material-icons'>person_outline</i>My Auctions</Link></li>
             <li><Link to='/user/my-bids'><i className='material-icons'>local_atm</i>My Bids</Link></li>
-            <li><Link to='/user/my-cart'><i className='material-icons'>shopping_cart</i>Won Bids/My Cart</Link></li>
+            <li><Link to='/user/my-cart'><i className='material-icons'>shopping_cart</i>My Won Bids/Cart</Link></li>
             <li><Link to='item1'><i className='material-icons'>mail_outline</i>Messages</Link></li>
 
             <li><Link to='' className='subheader'>Account Settings</Link></li>
