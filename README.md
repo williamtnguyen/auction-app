@@ -18,12 +18,12 @@ With npm-scripts *(located in ./package.json)*, installing the dependencies on b
 $ npm install
 $ npm run client-install
 ```
-Because some of the scripts use [nodemon](https://github.com/remy/nodemon) to start servers, it will have to be installed separately as a *(devDependency)*:
+Because some of the scripts use [nodemon](https://github.com/remy/nodemon) to start servers, it will have to be installed separately as a "devDependency":
 ```shell
 $ npm i nodemon --save-dev
 ```
 ### Starting Servers Concurrently
-Leveraging [concurrently](https://github.com/kimmobrunfeldt/concurrently) v5.1.0 allows both the Express server and React application to be started concurrently (i.e., without needing two terminals) from the root directory. 
+Leveraging [concurrently](https://github.com/kimmobrunfeldt/concurrently) v5.1.0 allows both the Express server and React application to be started concurrently (i.e., without needing two terminals) from the root directory: 
 ```shell
 $ npm run dev
 ```
