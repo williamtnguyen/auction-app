@@ -18,7 +18,7 @@ With npm-scripts *(located in ./package.json)*, installing the dependencies on b
 $ npm install
 $ npm run client-install
 ```
-Because some of the scripts use [nodemon](https://github.com/remy/nodemon) to start servers, it will have to be installed separately as a "devDependency":
+Because some of the scripts use [nodemon](https://github.com/remy/nodemon) to start servers, it will have to be installed separately as a devDependency:
 ```shell
 $ npm i nodemon --save-dev
 ```
