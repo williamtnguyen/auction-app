@@ -17,7 +17,7 @@ app.use('/uploads/', express.static('uploads'));
 // DB Config
 const db = require('./config/keys').mongoURI;
 // Connecting to MongoDB Atlas 
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => console.log('MongoDB successfully connected...'))
   .catch((err) => console.log(err));
 
