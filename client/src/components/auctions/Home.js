@@ -45,7 +45,7 @@ class Home extends Component {
         {/* Utility navbar for users only */}
         <UtilityNavbar history={this.props.history}/>
         
-        {/* Home-feed of auction thumbnails */}
+        {/* Home-Feed of auction thumbnails */}
         <section className='row container'>
 
           {this.state.auctions.slice(0).reverse().map(auction => (

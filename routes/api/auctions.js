@@ -46,7 +46,7 @@ const upload = multer({
 router.get('/', (req, res) => {
   if(!req.query.search) {
     // Get all auctions from DB and send them off as JSON 
-    Auction.find({}, (err, allAuctions) => {
+    Auction.find({ endingDate: { $gte: new Date() }}, (err, allAuctions) => {
       if(err) { 
         return console.log(`No auctions found: ${err}`); 
       }
