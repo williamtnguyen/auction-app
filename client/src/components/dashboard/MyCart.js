@@ -8,6 +8,7 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 
 // MyCart component aggregates UtilityNavbar component
 import UtilityNavbar from './UtilityNavbar';
+import PaypalButton from '../paypal/PaypalButton';
 
 // Component to view won-bids as a buyer
 class MyCart extends Component {
@@ -57,7 +58,7 @@ class MyCart extends Component {
           <h4 className='center' style={{ marginTop: '4rem' }}><b>My Cart</b></h4>
           <div className='divider'></div>
           <div style={{ paddingTop: '1rem' }} className='col m8 offset-m2'>
-            <ul className='collection'>
+            <ul className='collection' style={{ borderRadius: '5px' }}>
 
               {this.state.myCart.slice(0).reverse().map(auction => (
                 <li key={auction._id} className='collection-item avatar'>
@@ -74,6 +75,7 @@ class MyCart extends Component {
             </ul>
                   
             <h6 className='right'><b>Subtotal: ${this.state.totalPrice}</b></h6>
+            <PaypalButton amount={this.state.totalPrice} />
           </div>
       
         </section>
