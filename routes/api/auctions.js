@@ -58,7 +58,7 @@ router.get('/', (req, res) => {
     // Get all auctions that match the query and return them in order of relevance
     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
     Auction
-      .find({ $text: { $search: regex }}, { score: {$meta: 'textScore'}})
+      .find({ $text: { $search: regex }, endingDate: { $gte: new Date() }}, { score: {$meta: 'textScore'}})
       .exec((err, matchedAuctions) => { 
         if(err) { return console.log('need to handle no search hit here') }
         res.json(matchedAuctions);

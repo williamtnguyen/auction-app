@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 // Sandbox ID so don't have to hide
 const CLIENT_ID = 'AVQobw9abf7AYLTiDAkbzoy1bXbNqi-kb0X10eHAiv5aN39ykOy0eKnz88PJFu8hcBAbkfa6w-n_VWhJ'
 
-function PaypalButton2(props) {
+function PaypalButton(props) {
   // const [paidFor, setPaidFor] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
   // Reference to DOM element to mount paypal button
@@ -55,4 +55,4 @@ function PaypalButton2(props) {
   );
 }
 
-export default PaypalButton2;
+export default PaypalButton;
