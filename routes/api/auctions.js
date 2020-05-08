@@ -209,6 +209,43 @@ router.put('/:auctionID', (req, res) => {
 });
 
 
+/**
+ * AUCTION 'DELETE' ENDPOINT
+ * @route POST api/auctions/purchased-cart
+ * @desc removes from 'myCart' on client from the 'bids' array in mongoose. 
+ * @access Public
+ */
+router.post('/purchased-cart', (req, res) => {
+  const { buyerID, myCartIDs } = req.body;
+
+  // Remove the Auctions from the respective buyers's bids array
+  User.findById(buyerID)
+    .then(foundBuyer => {
+      console.log(`Before:\n ${foundBuyer.bids}`);
+      myCartIDs.forEach(auctionID => {
+        let bidIndex = foundBuyer.bids.indexOf(auctionID);
+        if(bidIndex > -1 ) {
+          foundBuyer.bids.splice(bidIndex, 1);
+        }
+      });
+      console.log(`After:\n ${foundBuyer.bids}`);
+      
+      // Save changes and respond with JSON
+      foundBuyer.save();
+      res.json({ deletedAuctions: myCartIDs, buyerCart: foundBuyer.bids });
+    })
+    .catch(err => {});
+
+  // // Delete the Auction documents
+  // Auction.deleteMany({
+  //   _id: { $in: myCartIDs }
+  // }, (err) => {
+  //   if(err) { return console.log(`Error deleting Auction documents from myCart: ${err}`) }
+  //   console.log(`Auction documents from myCart were deleted!`);
+  // });
+})
+
+
 
 /**
  * Helper method: escaping regex

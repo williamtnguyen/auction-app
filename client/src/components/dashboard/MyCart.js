@@ -15,7 +15,8 @@ class MyCart extends Component {
   constructor() {
     super();
     this.state = {
-      myCart: [],
+      myCart: [], // For rendering component
+      myCartIDs: [], // For onApprove API call when paypal OAuth completes
       totalPrice: 0.00
     };
     // Binding 'this' context for event handlers
@@ -29,12 +30,14 @@ class MyCart extends Component {
       .get(`/api/users/${userID}/my-cart`)
       .then(res => {
         const myCart = res.data;
-        // console.log(myCart);
-        let sum = 0;
+        let sum       = 0,
+            myCartIDs = []
         myCart.forEach(auction => {
           sum += auction.currentBid;
+          myCartIDs.push(auction._id);
         });
-        this.setState({ myCart: myCart, totalPrice: sum });
+
+        this.setState({ myCart: myCart, myCartIDs: myCartIDs, totalPrice: sum });
       })
       // jQuery and JS for materialize.css
       M.AutoInit();
@@ -47,6 +50,26 @@ class MyCart extends Component {
 
  
   render() {
+    if(!this.state.myCart.length) {
+      return (
+        <div>
+          {/* Utilitiy navbar for users only */}
+          <UtilityNavbar />
+
+          {/* UL of collapsible posted auctions */}
+          <section className='row container center'>
+            <h4 style={{ marginTop: '4rem' }}><b>My Cart</b></h4>
+            <div className='divider'></div>
+
+            <section style={{ paddingTop: '2rem' }}>
+              <i className='material-icons' style={{ fontSize: '3rem' }}>shopping_cart</i>
+              <h6>Looks like your cart is empty. Please bid on items to checkout.</h6>
+            </section>
+          </section>
+        </div>
+      );
+    }
+    
     return (
       <div>
         {/* Utilitiy navbar for users only */}
@@ -75,7 +98,12 @@ class MyCart extends Component {
             </ul>
                   
             <h6 className='right'><b>Subtotal: ${this.state.totalPrice}</b></h6>
-            <PaypalButton amount={this.state.totalPrice} />
+            {/* Paypal buttons */}
+            <PaypalButton 
+              buyerID={this.props.auth.user.id} 
+              myCartIDs={this.state.myCartIDs} 
+              amount={this.state.totalPrice} 
+            />
           </div>
       
         </section>

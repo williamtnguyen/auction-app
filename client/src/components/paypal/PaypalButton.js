@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 
 // Sandbox ID so don't have to hide
 const CLIENT_ID = 'AVQobw9abf7AYLTiDAkbzoy1bXbNqi-kb0X10eHAiv5aN39ykOy0eKnz88PJFu8hcBAbkfa6w-n_VWhJ'
@@ -34,8 +35,17 @@ function PaypalButton(props) {
             // FINALIZE THE TRANSACTION
             onApprove: async (data, actions) => {
               const order = await actions.order.capture();
+
+              // Make API call to express server
+              const reqBody = { buyerID: props.buyerID, myCartIDs: props.myCartIDs };
+              axios
+                .post('/api/auctions/purchased-cart', reqBody)
+                .then(res => console.log(res))
+                .catch(err => {});
+
               // Show a success message to the buyer
               alert(`Transaction completed by ${order.payer.name.given_name}!`);
+              window.location.reload();
             },
             style: {
               shape:  'pill',
