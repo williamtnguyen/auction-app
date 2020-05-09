@@ -224,7 +224,7 @@ router.post('/purchased-cart', (req, res) => {
       console.log(`Before:\n ${foundBuyer.bids}`);
       myCartIDs.forEach(auctionID => {
         let bidIndex = foundBuyer.bids.indexOf(auctionID);
-        if(bidIndex > -1 ) {
+        if(bidIndex > -1) {
           foundBuyer.bids.splice(bidIndex, 1);
         }
       });

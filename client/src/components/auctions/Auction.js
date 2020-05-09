@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import axios from 'axios';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
+import countDownTimer from '../../utils/countDown';
 
 class Auction extends Component {
   constructor() {
@@ -49,7 +50,11 @@ class Auction extends Component {
         });
       });
       // jQuery and JS for materialize.css
-      M.AutoInit();
+      // M.AutoInit();
+      // const dateObject = new Date(`${this.state.endingDate}`);
+      // const diffSeconds = Math.abs((dateObject - Date.now()) / 1000);
+      // const timeLeft = document.querySelector('#countDown');
+      // countDownTimer(diffSeconds, timeLeft);
   }
 
   // Depreacted lifecycle, revise when all functionality is done
@@ -98,6 +103,7 @@ class Auction extends Component {
             <h3><b>{this.state.title}</b></h3>
             <p><b><i className='material-icons'>person_outline</i> Seller: </b> {this.state.author.name}</p>
             <blockquote>{this.state.description}</blockquote>
+            {/* <h5><b>Ends in:</b> <span id='countDown'></span></h5> */}
             <h5><b>Current bid:</b> <i className='material-icons'>attach_money</i>{this.state.currentBid}</h5>
             
             {/* Form: PUT route for a bid */}
