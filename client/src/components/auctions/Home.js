@@ -59,7 +59,7 @@ class Home extends Component {
                     <span className='card-title' style={{fontSize:'1.1rem', fontWeight:'440'}}>
                       {auction.title}
                     </span>
-                    <p>${auction.currentBid}</p>
+                    {auction.hasBuyItNow ? <p>${auction.buyItNow}</p> : <p>${auction.currentBid}</p>}
                   </div>
                 </div>
               </div>

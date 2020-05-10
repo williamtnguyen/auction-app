@@ -179,7 +179,7 @@ router.get('/:userID/my-cart', (req, res) => {
       // Find all bids from the currentUsers' array of auction id's they've bid on and has expired
       Auction.find({
         _id: { $in: userBidIDs },
-        endingDate: { $lte: new Date() }
+        $or: [{isBought: true}, {endingDate: { $lte: new Date() }},]
       })
       .then(userBids => {
         res.json(userBids);

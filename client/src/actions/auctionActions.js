@@ -3,7 +3,8 @@ import axios from 'axios';
 import {
   GET_ERRORS,
   POST_AUCTION,
-  PLACE_BID
+  PLACE_BID,
+  AUCTION_BOUGHT
 } from './types';
 
 /* Post an auction */
@@ -59,5 +60,28 @@ export const placeBid = (auctionID, newBidData) => dispatch => {
 export const updateBidState = () => {
   return {
     type: PLACE_BID
+  };
+};
+
+
+/* buy dat thang */
+export const buyItNow = (auctionID, boughtBidData) => dispatch => {
+  axios
+    .put(`/api/auctions/buy-it-now/${ auctionID }`, boughtBidData)
+    .then(res => {
+      console.log(res);
+      dispatch(updateBoughtState());
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    })
+};
+
+export const updateBoughtState = () => {
+  return {
+    type: AUCTION_BOUGHT
   };
 };

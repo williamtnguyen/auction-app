@@ -46,7 +46,7 @@ const upload = multer({
 router.get('/', (req, res) => {
   if(!req.query.search) {
     // Get all auctions from DB and send them off as JSON 
-    Auction.find({ endingDate: { $gte: new Date() }}, (err, allAuctions) => {
+    Auction.find({ endingDate: { $gte: new Date() }, isBought: false }, (err, allAuctions) => {
       if(err) { 
         return console.log(`No auctions found: ${err}`); 
       }
@@ -58,7 +58,10 @@ router.get('/', (req, res) => {
     // Get all auctions that match the query and return them in order of relevance
     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
     Auction
-      .find({ $text: { $search: regex }, endingDate: { $gte: new Date() }}, { score: {$meta: 'textScore'}})
+      .find({ 
+        $text: { $search: regex }, endingDate: { $gte: new Date() }, isBought: false }, 
+        { score: {$meta: 'textScore'} }
+      )
       .exec((err, matchedAuctions) => { 
         if(err) { return console.log('need to handle no search hit here') }
         res.json(matchedAuctions);
@@ -210,6 +213,32 @@ router.put('/:auctionID', (req, res) => {
 
 
 /**
+ * AUCTION 'UPDATE' ENDPOINT
+ * @route POST api/auctions/buy-it-now/:auctionID
+ * @desc buys the bid and sets the document's 'isBought' field to true
+ * @access Public
+ */
+router.put('/buy-it-now/:auctionID', (req, res) => {
+  Auction.findById(req.params.auctionID)
+    .then(foundAuction => {
+      const buyerID     = req.body.buyerID,
+            buyerName   = req.body.buyerName;
+      foundAuction.currentBidder = { id: buyerID, name: buyerName }
+      foundAuction.isBought = true;
+      foundAuction.save();
+
+      User.findById(req.body.buyerID)
+        .then(foundUser => {
+          foundUser.bids.push(foundAuction);
+          foundUser.save();
+        });
+    });
+  
+
+})
+
+
+/**
  * AUCTION 'DELETE' ENDPOINT
  * @route POST api/auctions/purchased-cart
  * @desc removes from 'myCart' on client from the 'bids' array in mongoose. 
@@ -236,13 +265,14 @@ router.post('/purchased-cart', (req, res) => {
     })
     .catch(err => {});
 
-  // // Delete the Auction documents
-  // Auction.deleteMany({
-  //   _id: { $in: myCartIDs }
-  // }, (err) => {
-  //   if(err) { return console.log(`Error deleting Auction documents from myCart: ${err}`) }
-  //   console.log(`Auction documents from myCart were deleted!`);
-  // });
+  // Delete the Auction documents
+  Auction.deleteMany({
+    _id: { $in: myCartIDs }
+  }, (err) => {
+    if(err) { return console.log(`Error deleting Auction documents from myCart: ${err}`) }
+    console.log(`Auction documents from myCart were deleted!`);
+  });
+
 })
 
 

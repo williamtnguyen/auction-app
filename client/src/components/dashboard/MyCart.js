@@ -33,7 +33,7 @@ class MyCart extends Component {
         let sum       = 0,
             myCartIDs = []
         myCart.forEach(auction => {
-          sum += auction.currentBid;
+          sum += (auction.currentBid + auction.buyItNow);
           myCartIDs.push(auction._id);
         });
 
@@ -91,7 +91,11 @@ class MyCart extends Component {
                   <button onClick={this.handleRemove(auction._id)} className='btn-flat waves-effect'>
                     <i className='material-icons left'>delete_forever</i>Remove
                   </button>
-                  <span className='secondary-content black-text'><b>${auction.currentBid}</b></span>
+                  <span className='secondary-content black-text'>
+                    <b>
+                      {auction.hasBuyItNow ? <p>${auction.buyItNow}</p> : <p>${auction.currentBid}</p>}
+                    </b>
+                  </span>
                 </li>
               ))}
 

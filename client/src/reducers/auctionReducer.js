@@ -1,11 +1,13 @@
 import {
   POST_AUCTION,
-  PLACE_BID
+  PLACE_BID,
+  AUCTION_BOUGHT
 } from '../actions/types';
 
 const initialState = {
   isPosted: false,
-  bidPlaced: false
+  bidPlaced: false,
+  isBought: false
 };
 
 export default function(state = initialState, action) {
@@ -20,6 +22,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         bidPlaced: true
+      };
+    case AUCTION_BOUGHT:
+      return {
+        ...state,
+        isBought: true
       };
     default:
       return state;

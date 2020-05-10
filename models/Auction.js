@@ -56,6 +56,10 @@ const AuctionSchema = new Schema ({
   endingDate: {
     type: Date,
     required: true
+  },
+  isBought: {
+    type: Boolean,
+    default: false
   }
 });
 

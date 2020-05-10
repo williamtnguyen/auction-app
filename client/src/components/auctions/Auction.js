@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { placeBid } from '../../actions/auctionActions';
+import { placeBid, buyItNow } from '../../actions/auctionActions';
 import classnames from 'classnames';
 import axios from 'axios';
 
@@ -27,6 +27,7 @@ class Auction extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleBuyItNow = this.handleBuyItNow.bind(this);
   }
 
   componentDidMount() {
@@ -50,7 +51,7 @@ class Auction extends Component {
         });
       });
       // jQuery and JS for materialize.css
-      // M.AutoInit();
+      M.AutoInit();
       // const dateObject = new Date(`${this.state.endingDate}`);
       // const diffSeconds = Math.abs((dateObject - Date.now()) / 1000);
       // const timeLeft = document.querySelector('#countDown');
@@ -61,6 +62,9 @@ class Auction extends Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.auction.bidPlaced) {
       window.location.reload(); // react/redux driven refresh (only refresh on successful PUT)
+    }
+    if(nextProps.auction.isBought) {
+      this.props.history.push('/auctions');
     }
     if(nextProps.errors) {
       this.setState({
@@ -86,10 +90,64 @@ class Auction extends Component {
 
     this.props.placeBid(auctionID, newBidData);
   }
+  // buy dat thang
+  handleBuyItNow(event) {
+    event.preventDefault();
+    const { auctionID } = this.props.match.params;
+    const boughtBidData = {
+      buyerID: this.props.auth.user.id,
+      buyName: this.props.auth.user.name,
+    }
+
+    this.props.buyItNow(auctionID, boughtBidData);
+  }
 
 
   render() {
     const errors = this.state.errors;
+    if(this.state.hasBuyItNow) {
+      return (
+        <div className='container'>
+        <Link to='/auctions' className='btn-flat waves-effect' style={{ paddingBottom: '5rem' }}>
+          <i className='material-icons left'>keyboard_backspace</i>Back to dashboard
+        </Link>
+        <div className='row'>
+          <div className='col m5'>
+            <img src={`/${this.state.productImage}`} className='responsive-img' alt=''></img>
+          </div>
+          <div className='col m7'>
+            <h3><b>{this.state.title}</b></h3>
+            <p><b><i className='material-icons'>person_outline</i> Seller: </b> {this.state.author.name}</p>
+            <blockquote>{this.state.description}</blockquote>
+            {/* <h5><b>Ends in:</b> <span id='countDown'></span></h5> */}
+            <h5><b>Buy it now price:</b> <i className='material-icons'>attach_money</i>{this.state.buyItNow}</h5>
+            
+            {/* Form: PUT route for a purchase */}
+            <form noValidate onSubmit={this.handleBuyItNow}>
+              {/* submit button */}
+              <div className='col m2' style={{ paddingLeft: '11.25px'}}>
+                <button 
+                  style={{
+                    width: '150px',
+                    borderRadius: '3px',
+                    letterSpacing: '1.5px',
+                    marginTop: '1rem'
+                  }}
+                  type='submit'
+                  className='btn btn-large waves-effect waves-light hoverable blue lighten-3 black-text'
+                >
+                  Buy it Now
+                </button>
+              </div>
+            </form>
+ 
+          </div>
+        </div>
+      </div>
+      );
+    }
+
+    // Bidding option
     return (
       <div className='container'>
         <Link to='/auctions' className='btn-flat waves-effect' style={{ paddingBottom: '5rem' }}>
@@ -114,7 +172,9 @@ class Auction extends Component {
                   onChange={this.handleChange}
                   id="newBid" 
                   type="number" 
-                  placeholder="0.00" 
+                  placeholder="" 
+                  onFocus={(e) => e.target.placeholder='0.00'}
+                  onBlur={(e) => e.target.placeholder=''}
                   className={classnames('', {
                     invalid: errors.newBid
                   })}
@@ -149,6 +209,7 @@ class Auction extends Component {
 
 Auction.propTypes = {
   placeBid: PropTypes.func.isRequired,
+  buyItNow: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   auction: PropTypes.object.isRequired
 }
@@ -161,5 +222,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { placeBid }
+  { placeBid, buyItNow }
 ) (Auction);
