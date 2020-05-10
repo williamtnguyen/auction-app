@@ -257,7 +257,7 @@ class AuctionForm extends Component {
                   />
                 </div>
                 <div className="file-path-wrapper">
-                  <input disabled className="file-path validate" type="text" placeholder="Upload one or more images" />
+                  <input disabled className="file-path" type="text" placeholder="Upload one or more images" />
                 </div>
               </div>
 

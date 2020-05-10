@@ -232,9 +232,12 @@ router.put('/buy-it-now/:auctionID', (req, res) => {
           foundUser.bids.push(foundAuction);
           foundUser.save();
         });
-    });
-  
 
+      res.json({
+        boughtAuction: foundAuction,
+        buyer: { id: buyerID, name: buyerName }
+      });
+    });
 })
 
 
