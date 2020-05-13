@@ -73,8 +73,8 @@ class MyBids extends Component {
                         {auction.author.name}
                       </h6>
                       <h6><b>Ends on: </b>{this.getDateString(auction)}</h6>
-                      <div className='btn btn-small waves-effect waves-light'>
-                        <Link to={`/auctions/${auction._id}`} className='btn-flat waves-effect' style={{}}>
+                      <div>
+                        <Link to={`/auctions/${auction._id}`} className='btn-flat waves-effect waves-light hoverable red lighten-3' style={{}}>
                           <i className='material-icons right'>arrow_forward</i>View auction
                         </Link>
                       </div>

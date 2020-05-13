@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 import mockPic from '../../images/mario_king.jpg';
+import defaultPic from '../../images/logo.jpg'
 
 /* This component is a navbar with utility functions only avail to auth'd users */
 class UtilityNavbar extends Component {
@@ -85,7 +86,7 @@ class UtilityNavbar extends Component {
                 <ul id='nav-mobile' className='right hide-on-med-and-down'>
                   <li>
                     <Link to='/auctions/new' 
-                      className='btn waves-effect waves-light hoverable blue lighten-3 black-text'>
+                      className='btn waves-effect waves-light hoverable red lighten-3 black-text'>
                       Post Auction <i className="material-icons right">add</i>
                     </Link>
                   </li>
@@ -99,7 +100,7 @@ class UtilityNavbar extends Component {
             <li>
               <div className='user-view'>
                 <div className='background grey lighten-4'></div>
-                <Link to=''><img className='circle' src={mockPic} alt=''></img></Link>
+                <Link to=''><img className='circle' src={defaultPic} alt=''></img></Link>
                 <Link to=''><span className='black-text name'>{user.name}</span></Link>
                 <Link to=''><span className='black-text email'>@GoodSeller</span></Link>
               </div>

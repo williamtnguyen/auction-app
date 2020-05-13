@@ -193,7 +193,7 @@ class Auction extends Component {
                     marginTop: '1rem'
                   }}
                   type='submit'
-                  className='btn btn-large waves-effect waves-light hoverable blue lighten-3 black-text'
+                  className='btn btn-large waves-effect waves-light hoverable red lighten-3 black-text'
                 >
                   Place Bid
                 </button>
